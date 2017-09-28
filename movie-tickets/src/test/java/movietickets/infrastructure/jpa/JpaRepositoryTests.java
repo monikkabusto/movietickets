@@ -3,7 +3,7 @@ package movietickets.infrastructure.jpa;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
-import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,9 +58,9 @@ public class JpaRepositoryTests {
 		Cinema cinema = new Cinema("3-D Cinema", 5, 4);
 		cinemaRepository.save(cinema);
 		Movie movie = movieRepository.findById((long) 1);
-		BigDecimal money = new BigDecimal(250);
-		NowShowing screening = new NowShowing(movie, cinema, money);
-		screening.setSchedule(2017, 10, 10, 13, 30);
+		NowShowing screening = new NowShowing(movie, cinema);
+		LocalDateTime sched = LocalDateTime.of(2017, 10, 10, 13, 30);
+		screening.setSchedule(sched);
 		nowShowingRepository.save(screening);
 		NowShowing actualScreening = nowShowingRepository.findById(1L);
 		assertNotNull(actualScreening);

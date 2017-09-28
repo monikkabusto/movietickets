@@ -22,6 +22,12 @@ public class JpaNowShowingRepository
 		query.setParameter("id", id);
 		return query.getSingleResult();
 	}
+	@Override
+	public NowShowing findByCinemaId(Long id) {
+		TypedQuery<NowShowing> query = getEntityManager().createQuery("SELECT n FROM NowShowing n WHERE n.cinema = :id", NowShowing.class);
+		query.setParameter("id", id);
+		return query.getSingleResult();
+	}
 
 	@Override
 	public List<NowShowing> findAll() {

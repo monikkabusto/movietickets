@@ -29,10 +29,9 @@ public class NowShowing {
 	private BigDecimal price;
 	public static final int AFTER_CREDITS_AND_CLEANUP = 15;
 	
-	public NowShowing(Movie movie, Cinema cinema, BigDecimal price) {
+	public NowShowing(Movie movie, Cinema cinema) {
 		this.movie = movie;
 		this.cinema = cinema;
-		this.price = price;
 	}
 	public Long getId() {
 		return id;
@@ -58,10 +57,9 @@ public class NowShowing {
 		
 	}
 	
-	
-	public void setSchedule (int year, int month, int date, int hrs, int min)  {
-		LocalDate showingDate = LocalDate.of(year, month, date);
-		LocalTime time = LocalTime.of(hrs, min);
+	public void setSchedule (LocalDateTime dateTime)  {
+		LocalDate showingDate = dateTime.toLocalDate();
+		LocalTime time = dateTime.toLocalTime();
 		schedule = LocalDateTime.of(showingDate, time);
 	}
 	public NowShowing() {

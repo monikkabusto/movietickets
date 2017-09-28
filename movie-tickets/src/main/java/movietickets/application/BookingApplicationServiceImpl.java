@@ -86,6 +86,11 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
 		Movie movie = movieRepository.findByTitle(movieTitle);
 		return movie;
 	}
+	@Override
+	public Movie findMovieById(long id) {
+		Movie movie = movieRepository.findById(id);
+		return movie;
+	}
 	@Transactional(readOnly = true)
 	@Override
 	public Cinema findCinemaById(Long id) {
