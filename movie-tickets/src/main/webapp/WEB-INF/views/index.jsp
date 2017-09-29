@@ -8,8 +8,5 @@
 </head>
 <body>
 <h1><fmt:message key="welcome.title" /></h1>
-<!-- Bootstrap core JavaScript
-================================================== -->
-<!-- Placed at the end of the document so the pages load faster -->
 </body>
 </html>
