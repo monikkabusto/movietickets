@@ -22,6 +22,7 @@ import movietickets.domain.model.MovieRepository;
 import movietickets.domain.model.NowShowing;
 import movietickets.domain.model.NowShowingRepository;
 import movietickets.domain.model.Seats;
+import movietickets.domain.model.Ticket;
 
 @Rollback(false)
 @RunWith(SpringRunner.class)
@@ -53,35 +54,27 @@ public class JpaRepositoryTests {
 		assertEquals(savedCinema.getVenue(), "3-D IMAX2");
 	}
 
-//	@Test
-//	public void populateNowShowing() throws Exception {
-//		Cinema cinema = new Cinema("3-D Cinema", 5, 4);
-//		cinemaRepository.save(cinema);
-//		Movie movie = movieRepository.findById((long) 1);
-//		NowShowing screening = new NowShowing(movie, cinema);
-//		LocalDateTime sched = LocalDateTime.of(2017, 10, 10, 13, 30);
-//		screening.setSchedule(sched);
-//		nowShowingRepository.save(screening);
-//		NowShowing actualScreening = nowShowingRepository.findById(1L);
-//		assertNotNull(actualScreening);
-//		long movieId = actualScreening.getMovieId();
-//		assertEquals(movieId, 1L);
-//	}
 	@Test
-	public void findNowShowingByCinemaId() throws Exception {
+	public void populateNowShowing() throws Exception {
 		Cinema cinema = new Cinema("3-D Cinema", 5, 4);
 		cinemaRepository.save(cinema);
 		Movie movie = movieRepository.findById((long) 1);
-		NowShowing screening1 = new NowShowing(movie, cinema);
-		NowShowing screening2 = new NowShowing(movie, cinema);
-		LocalDateTime sched1 = LocalDateTime.of(2017, 10, 10, 13, 30);
-		LocalDateTime sched2 = sched1.plusMinutes(movie.getDuration());
-		screening1.setSchedule(sched1);
-		screening2.setSchedule(sched2);
-		nowShowingRepository.save(screening1);
-		nowShowingRepository.save(screening2);
-		Cinema savedCinema = cinemaRepository.findById(1L);
+		NowShowing screening = new NowShowing(movie, cinema);
+		LocalDateTime sched = LocalDateTime.of(2017, 10, 10, 13, 30);
+		screening.setSchedule(sched);
+		nowShowingRepository.save(screening);
+		NowShowing actualScreening = nowShowingRepository.findById(1L);
+		assertNotNull(actualScreening);
+		long movieId = actualScreening.getMovieId();
+		assertEquals(movieId, 1L);
+	}
+	@Test
+	public void findNowShowingByCinemaId() throws Exception {
+		Cinema savedCinema = cinemaRepository.findById(2L);
 		List<NowShowing> screenings = nowShowingRepository.findByCinemaId(savedCinema);
+		for (NowShowing screening : screenings) {
+			System.out.println(screening.toString());
+		}
 	}
 
 	@Test

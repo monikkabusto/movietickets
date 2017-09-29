@@ -37,12 +37,6 @@ public class BookingApplicationServiceTests {
 
 	@Autowired
 	private BookingApplicationService bookingService;
-	@Autowired
-	private NowShowingRepository nowShowingRepository;
-	@Autowired
-	private CinemaRepository cinemaRepository;
-	@Autowired
-	private TicketRepository ticketRepository;
 
 	public void setUp() throws Exception {
 
@@ -68,11 +62,5 @@ public class BookingApplicationServiceTests {
 		PurchaseVerification receipt = bookingService.bookTicket(newPurchase, seatNumbers);
 		System.out.println(receipt.getTransactionNumber());
 		assertEquals("Respeto 2017-09-29 19:23:00.0 Cine Adarna A1 A2 A3 A4", receipt.getTransactionNumber());
-	}
-
-	private static Date today() {
-		Calendar today = Calendar.getInstance(TimeZone.getDefault());
-		today.set(Calendar.HOUR_OF_DAY, 0);
-		return today.getTime();
 	}
 }

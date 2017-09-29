@@ -23,7 +23,7 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
 	private MovieRepository movieRepository;
 	private CinemaRepository cinemaRepository;
 	private NowShowingRepository nowShowingRepository;
-	private TicketRepository ticketRepository;
+	//private TicketRepository ticketRepository;
 
 	@Autowired
 	public BookingApplicationServiceImpl(MovieRepository movieRepository, CinemaRepository cinemaRepository,
@@ -32,7 +32,7 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
 		this.movieRepository = movieRepository;
 		this.cinemaRepository = cinemaRepository;
 		this.nowShowingRepository = nowShowingRepository;
-		this.ticketRepository = ticketRepository;
+		//this.ticketRepository = ticketRepository;
 	}
 
 	@Override

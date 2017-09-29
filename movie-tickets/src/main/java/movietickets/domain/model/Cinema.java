@@ -37,6 +37,9 @@ public class Cinema {
 	public List<Seats> getAllSeats() {
 		return seats;
 	}
+	public void setLayout(List<Seats> layout) {
+		seats = layout;
+	}
 	public void setLayout(int maxX, int maxY) {
 		List<Seats> seats = new ArrayList<Seats>();
 		for (int i = 1; i <= maxY; i++) {

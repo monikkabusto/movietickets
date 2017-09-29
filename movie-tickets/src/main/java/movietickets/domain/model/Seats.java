@@ -27,6 +27,9 @@ public class Seats {
 	public int getPosX() {
 		return posX;
 	}
+	public String getSeatName() {
+		return seatName;
+	}
 	public int getPosY() {
 		return posY;
 	}

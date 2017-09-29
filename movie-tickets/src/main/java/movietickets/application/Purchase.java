@@ -5,8 +5,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
-import movietickets.domain.model.NowShowing;
-
 public class Purchase {
 	private final BigDecimal payment;
 	private Date date;
