@@ -62,7 +62,7 @@ public class NowShowing {
 	}
 	@Override
 	public String toString() {
-		return movie.getMovieTitle() + " " + schedule.toString() + " " + cinema.getVenue();
+		return movie.getMovieTitle() + " " + dateAndTime.toString() + " " + cinema.getVenue();
 		
 	}
 	

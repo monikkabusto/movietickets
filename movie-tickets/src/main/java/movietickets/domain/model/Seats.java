@@ -16,11 +16,13 @@ public class Seats {
 	private boolean seat;
 	private int posX;
 	private int posY;
+	private String seatName;
 	
 	public Seats(boolean seat, int posX, int posY) {
 		this.seat = seat;
 		this.posX = posX;
 		this.posY = posY;
+		this.seatName = posY + ":" + posX;
 	}
 	public int getPosX() {
 		return posX;
@@ -33,5 +35,19 @@ public class Seats {
 	}
 	public boolean getBlockStatus() {
 		return seat;
+	}
+	public String getAlpha(int row) {
+		String alpha = null;
+		int letterNumber = row % 26;
+		char letter = (char) (letterNumber + 'A' - 1);
+		StringBuilder sb = new StringBuilder();
+		sb.append(letter);
+		alpha = sb.toString();
+		int multiple = (row - letterNumber) / 26;
+		for (int i = 0; i < multiple; i++) {
+			sb.append(letter);
+		}
+		alpha = sb.toString();
+		return alpha;
 	}
 }

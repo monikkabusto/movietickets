@@ -19,4 +19,5 @@ public interface BookingApplicationService {
 	List<Seats> findAllSeats(Cinema cinema);
 	void updateSeats(Ticket ticket);
 	Movie findMovieById(long id);
+	NowShowing findScreening(long id);
 }

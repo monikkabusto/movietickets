@@ -9,17 +9,14 @@ import movietickets.domain.model.NowShowing;
 
 public class Purchase {
 	private final BigDecimal payment;
-	private final Date date;
-	private final NowShowing movie;
+	private Date date;
+	private final long movie;
 	private final int numberOfSeats;
 
-	public Purchase(BigDecimal payment, Date date, NowShowing movie, int numberOfSeats) {
+	public Purchase(BigDecimal payment, long movie, int numberOfSeats) {
 		super();
 		this.payment = payment;
-		if (date == null) {
-			date = today();
-		}
-		this.date = date;
+		date = today();
 		this.movie = movie;
 		this.numberOfSeats = numberOfSeats;
 	}
@@ -31,7 +28,7 @@ public class Purchase {
 		return payment;
 	}
 	public long getMovie() {
-		return movie.getId();
+		return movie;
 	}
 	public int getNumberOfSeats() {
 		return numberOfSeats;

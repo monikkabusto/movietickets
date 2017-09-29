@@ -14,6 +14,7 @@ import movietickets.domain.model.NowShowing;
 import movietickets.domain.model.NowShowingRepository;
 import movietickets.domain.model.Seats;
 import movietickets.domain.model.Ticket;
+import movietickets.domain.model.TicketRepository;
 
 @Component
 @Transactional
@@ -22,27 +23,31 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
 	private MovieRepository movieRepository;
 	private CinemaRepository cinemaRepository;
 	private NowShowingRepository nowShowingRepository;
+	private TicketRepository ticketRepository;
 
 	@Autowired
 	public BookingApplicationServiceImpl(MovieRepository movieRepository, CinemaRepository cinemaRepository,
-			NowShowingRepository nowShowingRepository) {
+			NowShowingRepository nowShowingRepository, TicketRepository ticketRepository) {
 		super();
 		this.movieRepository = movieRepository;
 		this.cinemaRepository = cinemaRepository;
 		this.nowShowingRepository = nowShowingRepository;
+		this.ticketRepository = ticketRepository;
 	}
 
 	@Override
 	public PurchaseVerification bookTicket(Purchase purchase, List<String> seatNumbers) {
-		NowShowing movie = nowShowingRepository.findById(purchase.getMovie());
+		NowShowing movieScreening = nowShowingRepository.findById(purchase.getMovie());
+		Movie movie = movieRepository.findById(movieScreening.getMovieId());
+		movie.UpdateSales(seatNumbers.size());
 		StringBuilder transaction = new StringBuilder();
-		transaction.append(movie.toString());
+		transaction.append(movieScreening.toString());
 
 		for (String ticket : seatNumbers) {
 			int posY = Integer.parseInt(ticket.split(":")[0]);
 			int posX = Integer.parseInt(ticket.split(":")[1]);
-			Ticket newTicket = new Ticket(movie, posX, posY);
-			transaction.append(newTicket.getSeatLabel());
+			Ticket newTicket = new Ticket(movieScreening, posX, posY);
+			transaction.append(" " + newTicket.getSeatLabel());
 		}
 		String transactionID = transaction.toString();
 		return new PurchaseVerification(transactionID);
@@ -60,6 +65,12 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
 	public List<NowShowing> findAllScreenings() {
 		List<NowShowing> allScreenings = nowShowingRepository.findAll();
 		return allScreenings;
+	}
+	@Transactional(readOnly = true)
+	@Override
+	public NowShowing findScreening(long id) {
+		NowShowing screening = nowShowingRepository.findById(id);
+		return screening;
 	}
 
 	@Transactional(readOnly = true)
