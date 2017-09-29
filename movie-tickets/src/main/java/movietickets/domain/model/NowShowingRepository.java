@@ -8,5 +8,5 @@ public interface NowShowingRepository extends GenericRepository<NowShowing, Long
 
 	NowShowing findById(Long id);
 	List<NowShowing> findAll();
-	NowShowing findByCinemaId(Long id);
+	List<NowShowing> findByCinemaId(Cinema cinema);
 }

@@ -5,16 +5,18 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 
-@SpringBootApplication
-public class TicketsApplication extends SpringBootServletInitializer {
+import movietickets.application.InitialDatabase;
 
+@SpringBootApplication
+public class TicketsApplication //extends SpringBootServletInitializer {
+{
 	public static void main(String[] args) {
 		SpringApplication.run(TicketsApplication.class, args);
 	}
 
-	@Override
-	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
-		return builder.sources(TicketsApplication.class);
-	}
+//	@Override
+//	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
+//		return builder.sources(TicketsApplication.class);
+//	}
 
 }

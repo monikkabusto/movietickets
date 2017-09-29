@@ -30,6 +30,9 @@ public class Cinema {
 		this.maxX = maxX;
 		this.maxY = maxY;
 	}
+	public Cinema() {
+		// required by persistence layer
+	}
 	public List<Seats> getAllSeats() {
 		return seats;
 	}

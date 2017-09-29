@@ -38,7 +38,7 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
 		StringBuilder transaction = new StringBuilder();
 		transaction.append(movie.toString());
 
-		for(String ticket : seatNumbers){
+		for (String ticket : seatNumbers) {
 			int posY = Integer.parseInt(ticket.split(":")[0]);
 			int posX = Integer.parseInt(ticket.split(":")[1]);
 			Ticket newTicket = new Ticket(movie, posX, posY);
@@ -80,17 +80,20 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
 		// TODO Auto-generated method stub
 
 	}
+
 	@Transactional(readOnly = true)
 	@Override
 	public Movie findMovieByTitle(String movieTitle) {
 		Movie movie = movieRepository.findByTitle(movieTitle);
 		return movie;
 	}
+
 	@Override
 	public Movie findMovieById(long id) {
 		Movie movie = movieRepository.findById(id);
 		return movie;
 	}
+
 	@Transactional(readOnly = true)
 	@Override
 	public Cinema findCinemaById(Long id) {

@@ -53,19 +53,35 @@ public class JpaRepositoryTests {
 		assertEquals(savedCinema.getVenue(), "3-D IMAX2");
 	}
 
+//	@Test
+//	public void populateNowShowing() throws Exception {
+//		Cinema cinema = new Cinema("3-D Cinema", 5, 4);
+//		cinemaRepository.save(cinema);
+//		Movie movie = movieRepository.findById((long) 1);
+//		NowShowing screening = new NowShowing(movie, cinema);
+//		LocalDateTime sched = LocalDateTime.of(2017, 10, 10, 13, 30);
+//		screening.setSchedule(sched);
+//		nowShowingRepository.save(screening);
+//		NowShowing actualScreening = nowShowingRepository.findById(1L);
+//		assertNotNull(actualScreening);
+//		long movieId = actualScreening.getMovieId();
+//		assertEquals(movieId, 1L);
+//	}
 	@Test
-	public void populateNowShowing() throws Exception {
+	public void findNowShowingByCinemaId() throws Exception {
 		Cinema cinema = new Cinema("3-D Cinema", 5, 4);
 		cinemaRepository.save(cinema);
 		Movie movie = movieRepository.findById((long) 1);
-		NowShowing screening = new NowShowing(movie, cinema);
-		LocalDateTime sched = LocalDateTime.of(2017, 10, 10, 13, 30);
-		screening.setSchedule(sched);
-		nowShowingRepository.save(screening);
-		NowShowing actualScreening = nowShowingRepository.findById(1L);
-		assertNotNull(actualScreening);
-		long movieId = actualScreening.getMovieId();
-		assertEquals(movieId, 1L);
+		NowShowing screening1 = new NowShowing(movie, cinema);
+		NowShowing screening2 = new NowShowing(movie, cinema);
+		LocalDateTime sched1 = LocalDateTime.of(2017, 10, 10, 13, 30);
+		LocalDateTime sched2 = sched1.plusMinutes(movie.getDuration());
+		screening1.setSchedule(sched1);
+		screening2.setSchedule(sched2);
+		nowShowingRepository.save(screening1);
+		nowShowingRepository.save(screening2);
+		Cinema savedCinema = cinemaRepository.findById(1L);
+		List<NowShowing> screenings = nowShowingRepository.findByCinemaId(savedCinema);
 	}
 
 	@Test
@@ -80,7 +96,6 @@ public class JpaRepositoryTests {
 		assertEquals("Wonder Woman", movie1.getMovieTitle());
 		assertEquals("Kingsman: The Golden Circle", movie2.getMovieTitle());
 	}
-
 	@Test
 	public void testFindMovieByTitle() throws Exception {
 		Movie movie = movieRepository.findByTitle("Kingsman: The Golden Circle");

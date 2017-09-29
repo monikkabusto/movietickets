@@ -1,6 +1,7 @@
 package movietickets.domain.model;
 
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -12,6 +13,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import common.LocalDateTimeAttributeConverter;
 
 @Entity
 @Table(name = "T_NOWSHOWING")
@@ -25,7 +29,9 @@ public class NowShowing {
 	private Movie movie;
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Cinema cinema;
+	@Transient
 	private LocalDateTime schedule;
+	private Timestamp dateAndTime;
 	private BigDecimal price;
 	public static final int AFTER_CREDITS_AND_CLEANUP = 15;
 	
@@ -35,6 +41,9 @@ public class NowShowing {
 	}
 	public Long getId() {
 		return id;
+	}
+	public int getDuration() {
+		return movie.getDuration();
 	}
 	public String getMovieTitle() {
 		return movie.getMovieTitle();
@@ -53,7 +62,7 @@ public class NowShowing {
 	}
 	@Override
 	public String toString() {
-		return movie.getMovieTitle() + cinema.getVenue() + schedule.toString();
+		return movie.getMovieTitle() + " " + schedule.toString() + " " + cinema.getVenue();
 		
 	}
 	
@@ -61,6 +70,8 @@ public class NowShowing {
 		LocalDate showingDate = dateTime.toLocalDate();
 		LocalTime time = dateTime.toLocalTime();
 		schedule = LocalDateTime.of(showingDate, time);
+		LocalDateTimeAttributeConverter converter = new LocalDateTimeAttributeConverter();
+		dateAndTime = converter.convertToDatabaseColumn(schedule);
 	}
 	public NowShowing() {
 		// required by persistence layer

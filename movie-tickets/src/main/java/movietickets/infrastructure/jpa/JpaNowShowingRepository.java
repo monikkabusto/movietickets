@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import common.infrastructure.persistence.jpa.JpaGenericRepository;
+import movietickets.domain.model.Cinema;
 import movietickets.domain.model.NowShowing;
 import movietickets.domain.model.NowShowingRepository;
 @Repository
@@ -23,10 +24,10 @@ public class JpaNowShowingRepository
 		return query.getSingleResult();
 	}
 	@Override
-	public NowShowing findByCinemaId(Long id) {
-		TypedQuery<NowShowing> query = getEntityManager().createQuery("SELECT n FROM NowShowing n WHERE n.cinema = :id", NowShowing.class);
-		query.setParameter("id", id);
-		return query.getSingleResult();
+	public List<NowShowing> findByCinemaId(Cinema cinema) {
+		TypedQuery<NowShowing> query = getEntityManager().createQuery("SELECT n FROM NowShowing n WHERE cinema = :id", NowShowing.class);
+		query.setParameter("id", cinema);
+		return query.getResultList();
 	}
 
 	@Override

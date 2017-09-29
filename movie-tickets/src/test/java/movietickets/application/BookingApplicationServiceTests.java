@@ -24,15 +24,14 @@ import movietickets.domain.model.NowShowing;
 import movietickets.domain.model.NowShowingRepository;
 import movietickets.domain.model.Seats;
 
-@Rollback(false)
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @Transactional
+@Rollback(false)
 public class BookingApplicationServiceTests {
 
 	@Autowired
 	private BookingApplicationService bookingService;
-	
 	@Autowired
 	private NowShowingRepository nowShowingRepository;
 	@Autowired
@@ -68,31 +67,66 @@ public class BookingApplicationServiceTests {
 		movies.add(movie4);
 		movies.add(movie5);
 		List<NowShowing> screenings = new ArrayList<>();
-		LocalDateTime startDate = LocalDateTime.now();
-		for(int i = 1; i <= movies.size() * cinemas.size(); i++) {
+		for (int i = 0; i < movies.size() * cinemas.size(); i++) {
 			Movie movie = movies.get(i % movies.size());
 			Cinema cinema = cinemas.get(i % cinemas.size());
 			NowShowing screening = new NowShowing(movie, cinema);
 			screenings.add(screening);
 			nowShowingRepository.save(screening);
 		}
+		List<NowShowing> screeningCinema1 = nowShowingRepository.findByCinemaId(savedCinema1);
+		List<NowShowing> screeningCinema2 = nowShowingRepository.findByCinemaId(savedCinema2);
+		List<NowShowing> screeningCinema3 = nowShowingRepository.findByCinemaId(savedCinema3);
+		LocalDateTime startDate = LocalDateTime.now();
+		LocalDateTime startDate1 = startDate;
+		LocalDateTime startDate2 = startDate;
+		LocalDateTime startDate3 = startDate;
+		for (int j = 0; j < screeningCinema1.size(); j++) {
+			int duration = screeningCinema1.get(j).getDuration() + 20;
+			if (j == 0) {
+				screeningCinema1.get(j).setSchedule(startDate1);
+			} else {
+				LocalDateTime schedule = startDate1.plusMinutes(duration);
+				screeningCinema1.get(j).setSchedule(schedule);
+				startDate1 = schedule;
+			}
+			System.out.println(screeningCinema1.get(j).toString());
+		}
+		for (int j = 0; j < screeningCinema2.size(); j++) {
+			int duration = screeningCinema2.get(j).getDuration() + 20;
+			if (j == 0) {
+				screeningCinema2.get(j).setSchedule(startDate2);
+			} else {
+				LocalDateTime schedule = startDate2.plusMinutes(duration);
+				screeningCinema2.get(j).setSchedule(schedule);
+				startDate2 = schedule;
+			}
+			System.out.println(screeningCinema2.get(j).toString());
+		}
+		for (int j = 0; j < screeningCinema3.size(); j++) {
+			int duration = screeningCinema3.get(j).getDuration() + 20;
+			if (j == 0) {
+				screeningCinema3.get(j).setSchedule(startDate3);
+			} else {
+				LocalDateTime schedule = startDate3.plusMinutes(duration);
+				screeningCinema3.get(j).setSchedule(schedule);
+				startDate3 = schedule;
+			}
+			System.out.println(screeningCinema3.get(j).toString());
+		}
 	}
 
 	@After
 	public void tearDown() throws Exception {
-		
+
 	}
 
 	@Test
 	public void testForPurchase() {
-		//List<String> seats = new ArrayList<String>();
-		//Purchase purchase = new Purchase(240, today(), 
+		// List<String> seats = new ArrayList<String>();
+		// Purchase purchase = new Purchase(240, today(),
 	}
 
-//	@Test
-//	public void testBookTickets() {
-//		
-//	}
 	private static List<Seats> cinemaLayout(int maxX, int maxY) {
 		List<Seats> seats = new ArrayList<Seats>();
 		for (int i = 1; i <= maxY; i++) {
@@ -103,6 +137,7 @@ public class BookingApplicationServiceTests {
 		}
 		return seats;
 	}
+
 	private static Date today() {
 		Calendar today = Calendar.getInstance(TimeZone.getDefault());
 		today.set(Calendar.HOUR_OF_DAY, 0);
