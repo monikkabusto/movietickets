@@ -23,7 +23,7 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
 	private MovieRepository movieRepository;
 	private CinemaRepository cinemaRepository;
 	private NowShowingRepository nowShowingRepository;
-	//private TicketRepository ticketRepository;
+	// private TicketRepository ticketRepository;
 
 	@Autowired
 	public BookingApplicationServiceImpl(MovieRepository movieRepository, CinemaRepository cinemaRepository,
@@ -32,7 +32,7 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
 		this.movieRepository = movieRepository;
 		this.cinemaRepository = cinemaRepository;
 		this.nowShowingRepository = nowShowingRepository;
-		//this.ticketRepository = ticketRepository;
+		// this.ticketRepository = ticketRepository;
 	}
 
 	@Override
@@ -66,6 +66,7 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
 		List<NowShowing> allScreenings = nowShowingRepository.findAll();
 		return allScreenings;
 	}
+
 	@Transactional(readOnly = true)
 	@Override
 	public List<NowShowing> findMovieScreenings(long movieId) {
@@ -73,6 +74,7 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
 		List<NowShowing> allScreenings = nowShowingRepository.findByMovieId(movie);
 		return allScreenings;
 	}
+
 	@Transactional(readOnly = true)
 	@Override
 	public NowShowing findScreening(long id) {
@@ -110,6 +112,7 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
 		Movie movie = movieRepository.findById(id);
 		return movie;
 	}
+
 	@Override
 	public Cinema findCinemaById(long id) {
 		Cinema cinema = cinemaRepository.findById(id);
@@ -120,6 +123,18 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
 	@Override
 	public Cinema findCinemaById(Long id) {
 		Cinema cinema = cinemaRepository.findById(id);
+		return cinema;
+	}
+
+	@Override
+	public Cinema setAlphaSeats(Cinema cinema) {
+		cinema = cinemaRepository.findById(1L);
+		List<Seats> originalSeats = cinema.getAllSeats();
+		for (Seats seat : originalSeats) {
+			seat.setSeatView();
+		}
+		cinema.setLayout(originalSeats);
+		cinemaRepository.update(cinema);
 		return cinema;
 	}
 

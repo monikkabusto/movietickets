@@ -34,7 +34,6 @@ public abstract class JpaGenericRepository<T, ID extends Serializable> implement
 	public T save(T entity) {
 		em.persist(entity);
 		em.flush();
-		//em.getTransaction().commit();
 		return entity;
 	}
 

@@ -23,4 +23,5 @@ public interface BookingApplicationService {
 	NowShowing findScreening(long id);
 	List<NowShowing> findMovieScreenings(long movieId);
 	Cinema findCinemaById(long id);
+	Cinema setAlphaSeats(Cinema cinema);
 }

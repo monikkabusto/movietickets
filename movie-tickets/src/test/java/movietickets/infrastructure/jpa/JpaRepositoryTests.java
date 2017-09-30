@@ -53,6 +53,22 @@ public class JpaRepositoryTests {
 		assertNotNull(savedCinema);
 		assertEquals(savedCinema.getVenue(), "3-D IMAX2");
 	}
+	@Test
+	public void testForUpdate() throws Exception {
+		Cinema cinema = cinemaRepository.findById(1L);
+		List<Seats> originalSeats = cinema.getAllSeats();
+		for(Seats seat: originalSeats) {
+			seat.setSeatView();
+			System.out.println(seat.getSeatView());
+		}
+		cinema.setLayout(originalSeats);
+		cinemaRepository.update(cinema);
+		cinema = cinemaRepository.findById(1L);
+		List<Seats> changedSeats = cinema.getAllSeats();
+		for(Seats seat: changedSeats) {
+			System.out.println(seat.getSeatView());
+		}	
+	}
 
 	@Test
 	public void populateNowShowing() throws Exception {
@@ -86,14 +102,14 @@ public class JpaRepositoryTests {
 		Movie movie1 = movieRepository.findById((long) 1);
 		Movie movie2 = movieRepository.findById((long) 2);
 		assertNotNull(movie1);
-		assertEquals("Wonder Woman", movie1.getMovieTitle());
-		assertEquals("Kingsman: The Golden Circle", movie2.getMovieTitle());
+		assertEquals("Wonder Woman (2017)", movie1.getMovieTitle());
+		assertEquals("Kingsman The Golden Circle (2017)", movie2.getMovieTitle());
 	}
 	@Test
 	public void testFindMovieByTitle() throws Exception {
-		Movie movie = movieRepository.findByTitle("Kingsman: The Golden Circle");
+		Movie movie = movieRepository.findByTitle("Kingsman The Golden Circle");
 		assertNotNull(movie);
-		assertEquals("Kingsman: The Golden Circle", movie.getMovieTitle());
+		assertEquals("Kingsman The Golden Circle (2017)", movie.getMovieTitle());
 	}
 
 	@Test
@@ -104,8 +120,8 @@ public class JpaRepositoryTests {
 		for (Movie movie : movies) {
 			testMovies.add(movie);
 		}
-		assertEquals("Wonder Woman", testMovies.get(0).getMovieTitle());
-		assertEquals("Kingsman The Golden Circle", testMovies.get(1).getMovieTitle());
-		assertEquals("Transformers The Last Knight", testMovies.get(2).getMovieTitle());
+		assertEquals("Wonder Woman (2017)", testMovies.get(0).getMovieTitle());
+		assertEquals("Kingsman The Golden Circle (2017)", testMovies.get(1).getMovieTitle());
+		assertEquals("Transformers The Last Knight (2017)", testMovies.get(2).getMovieTitle());
 	}
 }

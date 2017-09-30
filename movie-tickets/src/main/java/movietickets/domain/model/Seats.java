@@ -17,6 +17,7 @@ public class Seats {
 	private int posX;
 	private int posY;
 	private String seatName;
+	private String seatView;
 	
 	public Seats(boolean seat, int posX, int posY) {
 		this.seat = seat;
@@ -24,11 +25,23 @@ public class Seats {
 		this.posY = posY;
 		this.seatName = posY + ":" + posX;
 	}
+	public Seats() {
+		// required by persistence layer
+	}
 	public int getPosX() {
 		return posX;
 	}
 	public String getSeatName() {
 		return seatName;
+	}
+	public String getSeatView() {
+		return seatView;
+	}
+	public void setSeatView() {
+		seatView = getAlpha(posY) + Integer.toString(posY);
+	}
+	public void setSeatName() {
+		seatName = posY + ":" + posX;;
 	}
 	public int getPosY() {
 		return posY;

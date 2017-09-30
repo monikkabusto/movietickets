@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import movietickets.application.BookingApplicationService;
 import movietickets.domain.model.Cinema;
@@ -51,12 +50,13 @@ public class MoviesController {
 	}
 
 	@RequestMapping(value = "cinemaSeats", method = RequestMethod.GET)
-	public ModelAndView displayAccountSummary(@RequestParam("screeningSched") long cinemaId) {
+	public String displayAccountSummary(@RequestParam("screeningSched") long cinemaId, Model model) {
 		Cinema cinema = bookingApplicationService.findCinemaById(cinemaId);
+		cinema = bookingApplicationService.setAlphaSeats(cinema);
 		List<Seats> cinemaLayout = bookingApplicationService.findAllSeats(cinema);
-		ModelAndView model = new ModelAndView(PATH + "/list", "cinemaLayout", cinemaLayout);
+		model.addAttribute("cinemaLayout", cinemaLayout);
 		System.out.println(cinema.getVenue());
-		return model;
+		return PATH + "/seats";
 	}
 
 }
