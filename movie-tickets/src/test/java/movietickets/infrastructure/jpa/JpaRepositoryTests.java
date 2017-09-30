@@ -105,7 +105,7 @@ public class JpaRepositoryTests {
 			testMovies.add(movie);
 		}
 		assertEquals("Wonder Woman", testMovies.get(0).getMovieTitle());
-		assertEquals("Kingsman: The Golden Circle", testMovies.get(1).getMovieTitle());
-		assertEquals("Transformers: The Last Knight", testMovies.get(2).getMovieTitle());
+		assertEquals("Kingsman The Golden Circle", testMovies.get(1).getMovieTitle());
+		assertEquals("Transformers The Last Knight", testMovies.get(2).getMovieTitle());
 	}
 }

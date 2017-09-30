@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -22,9 +23,9 @@ import common.LocalDateTimeAttributeConverter;
 public class NowShowing {
 
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
-	
+
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Movie movie;
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -33,49 +34,65 @@ public class NowShowing {
 	private LocalDateTime schedule;
 	private Timestamp dateAndTime;
 	private BigDecimal price;
+	@Transient
+	private long movieId;
 	public static final int AFTER_CREDITS_AND_CLEANUP = 15;
-	
+
 	public NowShowing(Movie movie, Cinema cinema) {
 		this.movie = movie;
 		this.cinema = cinema;
+		this.movieId = movie.getId();
 	}
+
 	public Long getId() {
 		return id;
 	}
 	public int getDuration() {
 		return movie.getDuration();
 	}
+
 	public String getMovieTitle() {
 		return movie.getMovieTitle();
 	}
+
 	public Long getMovieId() {
 		return movie.getId();
 	}
+
 	public Cinema getCinema() {
 		return cinema;
 	}
+
 	public BigDecimal getPrice() {
 		return price;
 	}
+
 	public LocalDateTime getSchedule() {
 		return schedule;
 	}
+
 	@Override
 	public String toString() {
-		return movie.getMovieTitle() + " " + dateAndTime.toString() + " " + cinema.getVenue();
-		
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMM d yyyy  hh:mm a");
+		return dateAndTime.toLocalDateTime().format(formatter).toString() + " " + cinema.getVenue();
 	}
-	
-	public void setSchedule (LocalDateTime dateTime)  {
+
+	public String getInfo() {
+		return movie.getMovieTitle() + " " + dateAndTime.toString() + " " + cinema.getVenue();
+	}
+
+	public void setSchedule(LocalDateTime dateTime) {
 		LocalDate showingDate = dateTime.toLocalDate();
 		LocalTime time = dateTime.toLocalTime();
 		schedule = LocalDateTime.of(showingDate, time);
 		LocalDateTimeAttributeConverter converter = new LocalDateTimeAttributeConverter();
 		dateAndTime = converter.convertToDatabaseColumn(schedule);
 	}
+
 	public NowShowing() {
 		// required by persistence layer
 	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -83,6 +100,7 @@ public class NowShowing {
 		result = prime * result + (int) (id ^ (id >>> 32));
 		return result;
 	}
+
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)

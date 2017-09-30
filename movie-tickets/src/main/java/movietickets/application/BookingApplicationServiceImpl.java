@@ -88,7 +88,6 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
 
 	@Override
 	public void updateSeats(Ticket ticket) {
-		// TODO Auto-generated method stub
 
 	}
 
@@ -110,6 +109,12 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
 	public Cinema findCinemaById(Long id) {
 		Cinema cinema = cinemaRepository.findById(id);
 		return cinema;
+	}
+
+	@Override
+	public List<NowShowing> findByMovieId(Movie movie) {
+		List<NowShowing> screenings = nowShowingRepository.findByMovieId(movie);
+		return screenings;
 	}
 
 }

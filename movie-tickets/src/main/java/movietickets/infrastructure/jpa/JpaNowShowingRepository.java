@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import common.infrastructure.persistence.jpa.JpaGenericRepository;
 import movietickets.domain.model.Cinema;
+import movietickets.domain.model.Movie;
 import movietickets.domain.model.NowShowing;
 import movietickets.domain.model.NowShowingRepository;
 @Repository
@@ -27,6 +28,12 @@ public class JpaNowShowingRepository
 	public List<NowShowing> findByCinemaId(Cinema cinema) {
 		TypedQuery<NowShowing> query = getEntityManager().createQuery("SELECT n FROM NowShowing n WHERE cinema = :id", NowShowing.class);
 		query.setParameter("id", cinema);
+		return query.getResultList();
+	}
+	@Override
+	public List<NowShowing> findByMovieId(Movie movie) {
+		TypedQuery<NowShowing> query = getEntityManager().createQuery("SELECT n FROM NowShowing n WHERE movie = :id", NowShowing.class);
+		query.setParameter("id", movie);
 		return query.getResultList();
 	}
 
