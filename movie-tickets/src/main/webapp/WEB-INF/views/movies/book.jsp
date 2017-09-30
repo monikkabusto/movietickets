@@ -1,15 +1,48 @@
 <%@ include file="/WEB-INF/views/_taglibs.jspf"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ page isELIgnored="false"%>
 <!DOCTYPE html>
 <html lang="en">
+<script>
+	function date_time(id) {
+		date = new Date;
+		year = date.getFullYear();
+		month = date.getMonth();
+		months = new Array('January', 'February', 'March', 'April', 'May',
+				'June', 'Jully', 'August', 'September', 'October', 'November',
+				'December');
+		d = date.getDate();
+		day = date.getDay();
+		days = new Array('Sunday', 'Monday', 'Tuesday', 'Wednesday',
+				'Thursday', 'Friday', 'Saturday');
+		h = date.getHours();
+		if (h < 10) {
+			h = "0" + h;
+		}
+		m = date.getMinutes();
+		if (m < 10) {
+			m = "0" + m;
+		}
+		s = date.getSeconds();
+		if (s < 10) {
+			s = "0" + s;
+		}
+		result = '' + days[day] + ' ' + months[month] + ' ' + d + ' ' + year
+				+ ' ' + h + ':' + m + ':' + s;
+		document.getElementById(id).innerHTML = result;
+		setTimeout('date_time("' + id + '");', '1000');
+		return true;
+	}
+</script>
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link href="https://fonts.googleapis.com/css?family=Oswald"
+<link
+	href="https://fonts.googleapis.com/css?family=Anton|Fjalla+One|Oswald"
 	rel="stylesheet">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -18,40 +51,20 @@
 <style type="text/css">
 body {
 	font-family: 'Oswald', sans-serif;
-	background: url(https://static1.squarespace.com/static/58c2df64cd0f68722ca767dd/t/58c2e1be37c581ac65dd41fd/1489166785502/website-background-images-tile-wallpaper-photo.jpg);
+	background:
+		url(http://www.zimknot.co.zw/wp-content/uploads/2016/07/Savin-NY-Website-Background-Web.jpg);
 }
 
-.carousel {
-	background: #f2e8e2;
-	margin-top: 20px;
-	width: 100%;
-	max-width: 400px;
-	padding: 0px;
-	
-}
-
-.carousel .item {
-	width: 100%;
-	max-width: 400px;
-}
-
-.carousel .item img {
-	padding: 0px;
-	max-width: 400px;
-	margin: 0 auto;
-}
-
-.movieposters {
+.allshowing {
 	padding: 0;
-	margin-left: 150px;
+	margin-left: 100px;
 	margin-right: 100px;
-	max-width: 400px;
-	box-shadow: 0px 0px 50px gray;
 }
 
 .nowshowing {
-	padding: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 0px; `
 	margin-bottom: 20px;
+	text-align: center;
 }
 
 .nowshowing p {
@@ -64,11 +77,37 @@ body {
 	height: 200px;
 	overflow: hidden;
 }
+
 h1 {
 	color: #b04553;
 }
-cinema {
-	color :#5f5f87;
+
+h2 {
+	color: #5f5f87;
+}
+
+.btn {
+	-webkit-border-radius: 11;
+	-moz-border-radius: 11;
+	border-radius: 11px;
+	-webkit-box-shadow: 0px 1px 3px #300230;
+	-moz-box-shadow: 0px 1px 3px #300230;
+	box-shadow: 0px 1px 3px #300230;
+	color: #ffffff;
+	font-size: 12px;
+	font-family: 'Fjalla One', sans-serif;
+	background: #0b1b26;
+	padding: 5px 10px 5px 10px;
+	text-decoration: none;
+}
+
+.btn:hover {
+	background: #2ebf37;
+	text-decoration: none;
+}
+
+.date {
+	text-align: right;
 }
 </style>
 </head>
@@ -79,55 +118,39 @@ cinema {
 				<fmt:message key="welcome.title" />
 			</h1>
 		</div>
-		<p class="lead">
-			<fmt:message key="welcome.caption" />
-		</p>
-	</div>
-	<div class="container-fluid row">
-		<div class="movieposters col-xs-6 col-md-6">
-			<div id="myCarousel" class="carousel slide" data-ride="carousel">
-				<div class="carousel-inner">
-					<div class="item active">
-						<img src="${pageContext.request.contextPath}/images/0.jpg" />
-					</div>
-					<c:forEach var="movie" items="${movies}">
-						<div class="item">
-							<img
-								src="${pageContext.request.contextPath}/images/${movie.id}.jpg" />
-							<div class="carousel-caption"></div>
-						</div>
-					</c:forEach>
-				</div>
-				<!-- Carousel controls -->
-				<a class="carousel-control left" href="#myCarousel"
-					data-slide="prev"> <span
-					class="glyphicon glyphicon-chevron-left"></span>
-				</a> <a class="carousel-control right" href="#myCarousel"
-					data-slide="next"> <span
-					class="glyphicon glyphicon-chevron-right"></span>
-				</a>
+		<div class="row">
+			<div class="col-md-6">
+				<h2>
+					<fmt:message key="movies.book.title" />
+				</h2>
+			</div>
+			<div class="col-md-6 date">
+
+				<span id="date_time"></span> <span id="date_time"></span>
+				<script type="text/javascript">
+					window.onload = date_time('date_time');
+				</script>
 			</div>
 		</div>
+	</div>
+	<div class="container-fluid row allshowing">
 		<c:forEach var="movie" items="${movies}" varStatus="i">
-			<div class="col-xs-2 col-m6-2 nowshowing">
+			<div class="col-6 col-md-3 nowshowing">
 				<img class="imageSmall"
 					src="${pageContext.request.contextPath}/images/${movie.id}.jpg" />
-				<p>${movie.movieTitle}</p>
-				<c:forEach var="screening" items="${screenings}">
-					<c:if test="${screening.movieId == i.count}">
-						<c:out value="${screening}" />
-						<br>
-					</c:if>
-				</c:forEach>
+				<p>${movie.movieTitle} (${movie.year})</p>
+				<%-- 				<form action="main.jsp" method="POST" target="_blank">
+					<form:button class="btn" type="submit" name="submitButton" value="${movie.id}">Reserve Ticket</button>
+				</form> --%>
+				<form:form action="showScreening" method="get">
+					<input type="hidden" name="id" value="${movie.id}"/>
+					<input class="btn" type="submit" value="Book Tickets"/>
+				</form:form>
+				<p></p>
 			</div>
 		</c:forEach>
 	</div>
-	<footer class="footer">
-	<div class="container">
-		<p class="text-muted">
-			<fmt:message key="footer.message" />
-		</p>
-	</div>
-</footer>
 </body>
+
 </html>
+

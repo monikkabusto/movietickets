@@ -21,4 +21,5 @@ public interface BookingApplicationService {
 	void updateSeats(Ticket ticket);
 	Movie findMovieById(long id);
 	NowShowing findScreening(long id);
+	List<NowShowing> findMovieScreenings(long movieId);
 }

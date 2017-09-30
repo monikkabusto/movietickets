@@ -18,7 +18,8 @@
 <style type="text/css">
 body {
 	font-family: 'Oswald', sans-serif;
-	background: url(https://static1.squarespace.com/static/58c2df64cd0f68722ca767dd/t/58c2e1be37c581ac65dd41fd/1489166785502/website-background-images-tile-wallpaper-photo.jpg);
+	background:
+		url(http://www.zimknot.co.zw/wp-content/uploads/2016/07/Savin-NY-Website-Background-Web.jpg);
 }
 
 .carousel {
@@ -27,7 +28,6 @@ body {
 	width: 100%;
 	max-width: 400px;
 	padding: 0px;
-	
 }
 
 .carousel .item {
@@ -64,11 +64,13 @@ body {
 	height: 200px;
 	overflow: hidden;
 }
+
 h1 {
 	color: #b04553;
 }
+
 cinema {
-	color :#5f5f87;
+	color: #5f5f87;
 }
 </style>
 </head>
@@ -98,7 +100,6 @@ cinema {
 						</div>
 					</c:forEach>
 				</div>
-				<!-- Carousel controls -->
 				<a class="carousel-control left" href="#myCarousel"
 					data-slide="prev"> <span
 					class="glyphicon glyphicon-chevron-left"></span>
@@ -123,11 +124,11 @@ cinema {
 		</c:forEach>
 	</div>
 	<footer class="footer">
-	<div class="container">
-		<p class="text-muted">
-			<fmt:message key="footer.message" />
-		</p>
-	</div>
-</footer>
+		<div class="container">
+			<p class="text-muted">
+				<fmt:message key="footer.message" />
+			</p>
+		</div>
+	</footer>
 </body>
 </html>

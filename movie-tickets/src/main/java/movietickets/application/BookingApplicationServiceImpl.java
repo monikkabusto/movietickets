@@ -68,6 +68,13 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
 	}
 	@Transactional(readOnly = true)
 	@Override
+	public List<NowShowing> findMovieScreenings(long movieId) {
+		Movie movie = movieRepository.findById(movieId);
+		List<NowShowing> allScreenings = nowShowingRepository.findByMovieId(movie);
+		return allScreenings;
+	}
+	@Transactional(readOnly = true)
+	@Override
 	public NowShowing findScreening(long id) {
 		NowShowing screening = nowShowingRepository.findById(id);
 		return screening;
