@@ -41,7 +41,7 @@ public class Movie {
 	}
 	
 	public String getMovieTitle() {
-		return movieTitle;
+		return movieTitle + " (" + year + ")";
 	}
 
 	public Integer getYear() {

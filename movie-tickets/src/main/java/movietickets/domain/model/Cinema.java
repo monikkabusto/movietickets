@@ -59,5 +59,8 @@ public class Cinema {
 	public int getMaxY() {
 		return maxY;
 	}
+	public Long getId() {
+		return id;
+	}
 	
 }

@@ -22,4 +22,5 @@ public interface BookingApplicationService {
 	Movie findMovieById(long id);
 	NowShowing findScreening(long id);
 	List<NowShowing> findMovieScreenings(long movieId);
+	Cinema findCinemaById(long id);
 }

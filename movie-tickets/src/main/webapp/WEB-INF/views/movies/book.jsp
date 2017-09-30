@@ -139,9 +139,6 @@ h2 {
 				<img class="imageSmall"
 					src="${pageContext.request.contextPath}/images/${movie.id}.jpg" />
 				<p>${movie.movieTitle} (${movie.year})</p>
-				<%-- 				<form action="main.jsp" method="POST" target="_blank">
-					<form:button class="btn" type="submit" name="submitButton" value="${movie.id}">Reserve Ticket</button>
-				</form> --%>
 				<form:form action="showScreening" method="get">
 					<input type="hidden" name="id" value="${movie.id}"/>
 					<input class="btn" type="submit" value="Book Tickets"/>
@@ -149,6 +146,8 @@ h2 {
 				<p></p>
 			</div>
 		</c:forEach>
+		
+		
 	</div>
 </body>
 

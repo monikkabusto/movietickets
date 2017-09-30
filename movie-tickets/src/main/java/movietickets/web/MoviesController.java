@@ -2,21 +2,19 @@ package movietickets.web;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import movietickets.application.BookingApplicationService;
-import movietickets.domain.model.Movie;
-import movietickets.domain.model.NowShowing;
-import movietickets.domain.model.Ticket;
+import movietickets.domain.model.Cinema;
+import movietickets.domain.model.Seats;
 
 @Controller
 @RequestMapping("/")
@@ -44,15 +42,21 @@ public class MoviesController {
 		return PATH + "/book";
 	}
 
-	// @RequestMapping(value = "screening", method = RequestMethod.GET)
-	// public String nowShowingSchedule(Model model) {
-	// return PATH + "/screening";
-	// }
 	@RequestMapping(value = "showScreening", method = RequestMethod.GET)
 	public String showMovieScreening(@RequestParam("id") long id, Model model) {
-		model.addAttribute("movieTitle", bookingApplicationService.findMovieById(id).getMovieTitle() + " (" + bookingApplicationService.findMovieById(id).getYear() + ")");
+		model.addAttribute("movieid", id);
+		model.addAttribute("movieTitle", bookingApplicationService.findMovieById(id).getMovieTitle());
 		model.addAttribute("screenings", bookingApplicationService.findMovieScreenings(id));
 		return PATH + "/screening";
+	}
+
+	@RequestMapping(value = "cinemaSeats", method = RequestMethod.GET)
+	public ModelAndView displayAccountSummary(@RequestParam("screeningSched") long cinemaId) {
+		Cinema cinema = bookingApplicationService.findCinemaById(cinemaId);
+		List<Seats> cinemaLayout = bookingApplicationService.findAllSeats(cinema);
+		ModelAndView model = new ModelAndView(PATH + "/list", "cinemaLayout", cinemaLayout);
+		System.out.println(cinema.getVenue());
+		return model;
 	}
 
 }

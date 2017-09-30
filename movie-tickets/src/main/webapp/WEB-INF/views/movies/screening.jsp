@@ -1,5 +1,6 @@
 <%@ include file="/WEB-INF/views/_taglibs.jspf"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ page isELIgnored="false"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,17 +31,40 @@ h1 {
 h2 {
 	color: #5f5f87;
 }
+
+.imageSmall {
+	align: right;
+	height: 600px;
+	overflow: hidden;
+}
 </style>
 </head>
 <body>
 	<h1>Book Tickets for ${movieTitle}</h1>
-	<form>
-		<select name="item">
-			<c:forEach var="screening" items="${screenings}" varStatus="i">
-				<option value="${screening}">${screening}</option>
-			</c:forEach>
+	<img class="imageSmall"
+		src="${pageContext.request.contextPath}/images/${movieid}.jpg" />
+<%-- 	<form:form target="frame" action="cinemaSeats">
+		<label> Select Schedule: <select name="screeninglist">
+				<c:forEach var="screening" items="${screenings}" varStatus="i">
+					<option value="${screening.cinemaId}">${screening}</option>
+				</c:forEach>
 		</select>
-	</form>
+		</label>
+		<input class="btn" type="submit" value="Book Tickets" />
+	</form:form> --%>
+
+	<form:form action="cinemaSeats" method="get" target="frame">
+		<label> Select Schedule: <select name="screeningSched">
+				<c:forEach var="screening" items="${screenings}" varStatus="i">
+					<option value="${screening.cinemaId}">${screening}</option>
+				</c:forEach>
+		</select>
+		</label>
+		<input class="btn" type="submit" value="Book Tickets" />
+	</form:form>
+	
+	<iframe src="myframe.jsp" name="frame"></iframe>
+
 </body>
 
 </html>

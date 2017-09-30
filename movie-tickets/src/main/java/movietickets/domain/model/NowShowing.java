@@ -36,17 +36,21 @@ public class NowShowing {
 	private BigDecimal price;
 	@Transient
 	private long movieId;
+	@Transient
+	private long cinemaId;
 	public static final int AFTER_CREDITS_AND_CLEANUP = 15;
 
 	public NowShowing(Movie movie, Cinema cinema) {
 		this.movie = movie;
 		this.cinema = cinema;
 		this.movieId = movie.getId();
+		this.cinemaId = cinema.getId();
 	}
 
 	public Long getId() {
 		return id;
 	}
+
 	public int getDuration() {
 		return movie.getDuration();
 	}
@@ -57,6 +61,10 @@ public class NowShowing {
 
 	public Long getMovieId() {
 		return movie.getId();
+	}
+
+	public Long getCinemaId() {
+		return cinema.getId();
 	}
 
 	public Cinema getCinema() {
