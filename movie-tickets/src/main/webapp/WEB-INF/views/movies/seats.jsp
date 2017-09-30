@@ -1,5 +1,7 @@
 <%@ include file="/WEB-INF/views/_taglibs.jspf"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ page isELIgnored="false"%>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,16 +22,71 @@ body {
 	font-family: 'Oswald', sans-serif;
 	background:
 		url(http://www.zimknot.co.zw/wp-content/uploads/2016/07/Savin-NY-Website-Background-Web.jpg);
+	text-align: center;
 }
 
 h1 {
 	color: #b04553;
+	font-size: 20px;
+}
+
+input[type=checkbox] {
+	display: none;
+	height: 50px;
+	width: 50px;
+}
+
+input[type=checkbox]+label {
+	background: #d7eae5;
+	border: 1px solid #ccc;
+	height: 40px;
+	width: 40px;
+	display: inline-block;
+	padding: 0 0 0 0px;
+}
+
+input[type=checkbox]:checked+label {
+	background: #d98c9e;
+	height: 40px;
+	width: 40px;
+	display: inline-block;
+	color: green;
+	padding: 0 0px 0 0px;
+}
+
+.imageSmall {
+	align: right;
+	height: 50px;
+	width: 80%;
+	overflow: hidden;
+	margin-bottom: 50px;
+	margin-top: 20px;
+}
+
+label {
+	margin-right: 10px
 }
 </style>
 </head>
 <body>
-	<c:forEach var="seat" items="${cinemaLayout}" varStatus="i">
-		<p>${seat.seatView}</p>
-	</c:forEach>
+	<h1>${title}</h1>
+	<img class="imageSmall"
+		src="${pageContext.request.contextPath}/images/screen.jpg" />
+	<p></p>
+	<form:form method="POST" modelAttribute="transaction" action="printTicket">
+		<form:checkboxes path="bookedSeats" items="${bookedSeats}" />
+		<br>
+		<input class="btn" type="submit" value="Book Tickets" /> 
+	</form:form>
+
+<%-- 	 	<c:forEach var="seat" items="${cinemaLayout}" varStatus="i">
+		${seat.seatView}
+		<input type="checkbox" name="${seat.seatView}" id="${seat.seatView}" />
+			<label for="${seat.seatView}"></label>
+			<c:if test="${((i.index + 1) % 3) == 0}">
+				<p></p>
+			</c:if>
+		</c:forEach> --%>
+
 </body>
 </html>

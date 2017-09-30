@@ -74,7 +74,7 @@ body {
 
 .imageSmall {
 	align: right;
-	height: 200px;
+	height: 150px;
 	overflow: hidden;
 }
 
@@ -138,7 +138,7 @@ h2 {
 			<div class="col-6 col-md-3 nowshowing">
 				<img class="imageSmall"
 					src="${pageContext.request.contextPath}/images/${movie.id}.jpg" />
-				<p>${movie.movieTitle} (${movie.year})</p>
+				<p>${movie.movieTitle}</p>
 				<form:form action="showScreening" method="get">
 					<input type="hidden" name="id" value="${movie.id}"/>
 					<input class="btn" type="submit" value="Book Tickets"/>

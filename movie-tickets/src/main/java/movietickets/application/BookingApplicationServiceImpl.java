@@ -23,7 +23,7 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
 	private MovieRepository movieRepository;
 	private CinemaRepository cinemaRepository;
 	private NowShowingRepository nowShowingRepository;
-	// private TicketRepository ticketRepository;
+	private TicketRepository ticketRepository;
 
 	@Autowired
 	public BookingApplicationServiceImpl(MovieRepository movieRepository, CinemaRepository cinemaRepository,
@@ -44,8 +44,8 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
 		transaction.append(movieScreening.toString());
 
 		for (String ticket : seatNumbers) {
-			int posY = Integer.parseInt(ticket.split(":")[0]);
-			int posX = Integer.parseInt(ticket.split(":")[1]);
+			int posY = Integer.parseInt(ticket.split("-")[0]);
+			int posX = Integer.parseInt(ticket.split("-")[1]);
 			Ticket newTicket = new Ticket(movieScreening, posX, posY);
 			transaction.append(" " + newTicket.getSeatLabel());
 		}
@@ -114,19 +114,6 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
 	}
 
 	@Override
-	public Cinema findCinemaById(long id) {
-		Cinema cinema = cinemaRepository.findById(id);
-		return cinema;
-	}
-
-	@Transactional(readOnly = true)
-	@Override
-	public Cinema findCinemaById(Long id) {
-		Cinema cinema = cinemaRepository.findById(id);
-		return cinema;
-	}
-
-	@Override
 	public Cinema setAlphaSeats(Cinema cinema) {
 		cinema = cinemaRepository.findById(1L);
 		List<Seats> originalSeats = cinema.getAllSeats();
@@ -142,6 +129,18 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
 	public List<NowShowing> findByMovieId(Movie movie) {
 		List<NowShowing> screenings = nowShowingRepository.findByMovieId(movie);
 		return screenings;
+	}
+
+	@Override
+	public Cinema findCinemaById(Long id) {
+		Cinema cinema = cinemaRepository.findById(id);
+		return cinema;
+	}
+	@Override
+	public List<Ticket> findTicketsByScreening(NowShowing nowShowing) {
+		List<Ticket> tickets = ticketRepository.findByScreening(nowShowing);
+		return tickets;
+		
 	}
 
 }

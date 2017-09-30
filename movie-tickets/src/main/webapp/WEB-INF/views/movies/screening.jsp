@@ -22,6 +22,7 @@ body {
 	font-family: 'Oswald', sans-serif;
 	background:
 		url(http://www.zimknot.co.zw/wp-content/uploads/2016/07/Savin-NY-Website-Background-Web.jpg);
+	text-align: center;
 }
 
 h1 {
@@ -46,7 +47,7 @@ h2 {
 	<form:form action="cinemaSeats" method="get">
 		<label> Select Schedule: <select name="screeningSched">
 				<c:forEach var="screening" items="${screenings}" varStatus="i">
-					<option value="${screening.cinemaId}">${screening}</option>
+					<option value="${screening.id}">${screening}</option>
 				</c:forEach>
 		</select>
 		</label>

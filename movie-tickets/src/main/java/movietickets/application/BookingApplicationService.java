@@ -9,19 +9,32 @@ import movietickets.domain.model.Seats;
 import movietickets.domain.model.Ticket;
 
 public interface BookingApplicationService {
-	
+
 	PurchaseVerification bookTicket(Purchase purchase, List<String> seatNumbers);
+
 	Movie findMovieByTitle(String movieTitle);
+
 	Cinema findCinemaById(Long id);
+
 	List<Movie> findAllMovies();
+
 	List<NowShowing> findAllScreenings();
+
 	List<NowShowing> findByMovieId(Movie movie);
+
 	List<Cinema> findAllCinemas();
+
 	List<Seats> findAllSeats(Cinema cinema);
+
 	void updateSeats(Ticket ticket);
+
 	Movie findMovieById(long id);
+
 	NowShowing findScreening(long id);
+
 	List<NowShowing> findMovieScreenings(long movieId);
-	Cinema findCinemaById(long id);
+
 	Cinema setAlphaSeats(Cinema cinema);
+
+	List<Ticket> findTicketsByScreening(NowShowing nowShowing);
 }

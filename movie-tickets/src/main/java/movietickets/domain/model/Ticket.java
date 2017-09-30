@@ -25,6 +25,7 @@ public class Ticket {
 	@SuppressWarnings("unused")
 	private int posY;
 	private String seatLabel;
+	private String movieDetails;
 	
 	public Ticket(NowShowing nowShowing, int posX, int posY) {
 		this.nowShowing = nowShowing;

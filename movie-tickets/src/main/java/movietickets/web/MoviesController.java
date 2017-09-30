@@ -2,18 +2,23 @@ package movietickets.web;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import movietickets.application.BookingApplicationService;
 import movietickets.domain.model.Cinema;
+import movietickets.domain.model.Member;
+import movietickets.domain.model.NowShowing;
 import movietickets.domain.model.Seats;
+import movietickets.domain.model.Transaction;
 
 @Controller
 @RequestMapping("/")
@@ -28,7 +33,7 @@ public class MoviesController {
 		this.bookingApplicationService = bookingApplicationService;
 	}
 
-	@RequestMapping(value = "movies", method = GET)
+	@RequestMapping(method = GET)
 	public String nowShowing(Model model) {
 		model.addAttribute("movies", bookingApplicationService.findAllMovies());
 		model.addAttribute("screenings", bookingApplicationService.findAllScreenings());
@@ -50,13 +55,32 @@ public class MoviesController {
 	}
 
 	@RequestMapping(value = "cinemaSeats", method = RequestMethod.GET)
-	public String displayAccountSummary(@RequestParam("screeningSched") long cinemaId, Model model) {
+	public String displayAccountSummary(@RequestParam("screeningSched") long screeningId, Model model) {
+		NowShowing nowShowing = bookingApplicationService.findScreening(screeningId);
+		long cinemaId = nowShowing.getCinemaId();
 		Cinema cinema = bookingApplicationService.findCinemaById(cinemaId);
 		cinema = bookingApplicationService.setAlphaSeats(cinema);
 		List<Seats> cinemaLayout = bookingApplicationService.findAllSeats(cinema);
-		model.addAttribute("cinemaLayout", cinemaLayout);
-		System.out.println(cinema.getVenue());
+		List<String> bookedSeats = new ArrayList<>();
+		for(Seats seat : cinemaLayout) {
+			bookedSeats.add(seat.getSeatName());
+		}
+		model.addAttribute("transaction", new Transaction());
+		model.addAttribute("bookedSeats", bookedSeats);
+		model.addAttribute("title", nowShowing.getMovieTitle() + " " + nowShowing.toString());
+		model.addAttribute("maxY", cinema.getMaxY());
+		model.addAttribute("maxX", cinema.getMaxX());
 		return PATH + "/seats";
+	}
+
+	@RequestMapping(method = RequestMethod.POST, value = "printTicket")
+	public String processSeats(@ModelAttribute("transaction") Transaction bookedSeats, Model model) {
+		model.addAttribute("tickets", bookedSeats.getBookedSeats());
+		for(String seats: bookedSeats.getBookedSeats()) {
+			System.out.println(seats);
+		}
+		return PATH + "/printTicket";
+
 	}
 
 }
