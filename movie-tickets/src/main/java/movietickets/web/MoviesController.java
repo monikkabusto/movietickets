@@ -42,6 +42,11 @@ public class MoviesController {
 		model.addAttribute("screenings", bookingApplicationService.findAllScreenings());
 		return PATH + "/list";
 	}
+	@RequestMapping(method = GET, value = "login")
+	public String login(Model model) {
+
+		return "/login";
+	}
 
 	@RequestMapping(value = "book", method = GET)
 	public String bookTickets(Model model) {
