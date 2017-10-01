@@ -2,6 +2,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ page isELIgnored="false"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="security"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -38,9 +40,29 @@ h2 {
 	height: 600px;
 	overflow: hidden;
 }
+.nav {
+	margin-right: 10px;
+	margin-top: 10px;
+	float: right;
+}
+
+.btn:hover, .btn:focus {
+	box-shadow: inset 0 0 0 2em var(- -hover);
+}
 </style>
 </head>
 <body>
+	<div class="nav">
+		<security:authorize access="isAuthenticated()">
+			<c:url var="logoutUrl" value='/logout' />
+			<button class="btn btn-info"
+				onclick="getElementById('_logoutForm').submit(); return false;">
+				<fmt:message key="navigate.logout" />
+				<form:form id="_logoutForm" action="${logoutUrl}" method="POST"
+					cssClass="hidden"></form:form>
+			</button>
+		</security:authorize>
+	</div>
 	<h1>Book Tickets for ${movieTitle}</h1>
 	<img class="imageSmall"
 		src="${pageContext.request.contextPath}/images/${movieid}.jpg" />

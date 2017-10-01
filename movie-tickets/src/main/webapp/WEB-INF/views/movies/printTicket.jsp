@@ -34,6 +34,7 @@ body {
     ${seat}<br />
 	</c:forEach>
 	<p>${transaction}</p>
+	<a class="button" href="/">Go Back to Home Page</a>
 
 </body>
 </html>

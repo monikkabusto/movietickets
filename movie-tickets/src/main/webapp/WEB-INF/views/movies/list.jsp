@@ -1,6 +1,9 @@
 <%@ include file="/WEB-INF/views/_taglibs.jspf"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ page isELIgnored="false"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="security"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -90,9 +93,43 @@ div.scroll {
 	height: 60px;
 	overflow: scroll;
 }
+
+.fill:hover, .fill:focus {
+	box-shadow: inset 0 0 0 2em var(- -hover);
+}
+
+.nav {
+	margin-right: 10px; margin-top : 10px;
+	float: right;
+	margin-top: 10px;
+}
+
+.btn:hover, .btn:focus {
+	box-shadow: inset 0 0 0 2em var(- -hover);
+}
 </style>
 </head>
 <body>
+	<div class="nav">
+		<security:authorize access="hasAnyRole('SYSREP')">
+			<a class="btn" href="/book">Book Tickets</a>
+		</security:authorize>
+		<security:authorize access="hasAnyRole('SYSAD')">
+			<a class="btn" href="/schedule">Schedule Movies</a>
+		</security:authorize>
+		<security:authorize access="hasAnyRole('MANAGER')">
+			<a class="btn" href="/sales">VIEW SALES REPORT</a>
+		</security:authorize>
+		<security:authorize access="isAuthenticated()">
+			<c:url var="logoutUrl" value='/logout' />
+			<button class="btn btn-info"
+				onclick="getElementById('_logoutForm').submit(); return false;">
+				<fmt:message key="navigate.logout" />
+				<form:form id="_logoutForm" action="${logoutUrl}" method="POST"
+					cssClass="hidden"></form:form>
+			</button>
+		</security:authorize>
+	</div>
 	<div class="container">
 		<div class="page-header">
 			<h1>

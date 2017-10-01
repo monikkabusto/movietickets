@@ -1,5 +1,7 @@
 <%@ include file="/WEB-INF/views/_taglibs.jspf"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="security"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ page isELIgnored="false"%>
 <!DOCTYPE html>
@@ -109,9 +111,29 @@ h2 {
 .date {
 	text-align: right;
 }
+.nav {
+	margin-right: 10px;
+	margin-top: 10px;
+	float: right;
+}
+
+.btn:hover, .btn:focus {
+	box-shadow: inset 0 0 0 2em var(- -hover);
+}
 </style>
 </head>
 <body>
+	<div class="nav">
+		<security:authorize access="isAuthenticated()">
+			<c:url var="logoutUrl" value='/logout' />
+			<button class="btn btn-info"
+				onclick="getElementById('_logoutForm').submit(); return false;">
+				<fmt:message key="navigate.logout" />
+				<form:form id="_logoutForm" action="${logoutUrl}" method="POST"
+					cssClass="hidden"></form:form>
+			</button>
+		</security:authorize>
+	</div>
 	<div class="container">
 		<div class="page-header">
 			<h1>
@@ -140,14 +162,14 @@ h2 {
 					src="${pageContext.request.contextPath}/images/${movie.imageName}" />
 				<p>${movie.movieTitle}</p>
 				<form:form action="showScreening" method="get">
-					<input type="hidden" name="id" value="${movie.id}"/>
-					<input class="btn" type="submit" value="Book Tickets"/>
+					<input type="hidden" name="id" value="${movie.id}" />
+					<input class="btn" type="submit" value="Book Tickets" />
 				</form:form>
 				<p></p>
 			</div>
 		</c:forEach>
-		
-		
+
+
 	</div>
 </body>
 

@@ -22,13 +22,7 @@
 
 </head>
 <body>
-	<security:authorize access="isAuthenticated()">
-		<li class=""><c:url var="logoutUrl" value='/logout' /> <a
-			href="${logoutUrl}"
-			onclick="getElementById('_logoutForm').submit(); return false;"><fmt:message
-					key="navigate.logout" /></a> <form:form id="_logoutForm"
-				action="${logoutUrl}" method="POST" cssClass="hidden"></form:form></li>
-	</security:authorize>
+
 	<tiles:insertAttribute name="main" />
 
 

@@ -32,5 +32,6 @@ body {
 	<c:forEach var="movie" items="${moviesToSchedule}">
 		<p>${movie}</p>
 	</c:forEach>
+	<a class="button" href="/">Go Back to Home Page</a>
 </body>
 </html>

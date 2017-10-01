@@ -2,6 +2,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ page isELIgnored="false"%>
+<%@ taglib uri="http://www.springframework.org/security/tags"
+	prefix="security"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -94,6 +96,18 @@ input[type=text]:focus {
 #addMovie {
 	display: none;
 }
+.nav {
+	margin-right: 10px;
+	margin-top: 10px;
+	float: right;
+}
+
+.btn:hover, .btn:focus {
+	box-shadow: inset 0 0 0 2em var(- -hover);
+}
+myb {
+	float: right;
+}
 </style>
 </head>
 <script>
@@ -106,6 +120,15 @@ input[type=text]:focus {
 	}
 </script>
 <body>
+	<security:authorize access="isAuthenticated()">
+			<c:url var="logoutUrl" value='/logout' />
+			<button class="btn btn-info myb"
+				onclick="getElementById('_logoutForm').submit(); return false;">
+				<fmt:message key="navigate.logout" />
+				<form:form id="_logoutForm" action="${logoutUrl}" method="POST"
+					cssClass="hidden"></form:form>
+			</button>
+	</security:authorize>
 	<h1>MovieX Cinema Scheduler</h1>
 	<h2>Select Movies to Schedule for next week</h2>
 	<form:form method="POST" modelAttribute="MoviesToSchedule"
