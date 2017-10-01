@@ -2,16 +2,21 @@ package movietickets.domain.model;
 
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+
 public class MoviesToSchedule {
+
 	private List<String> moviesToSchedule;
 	private List<String> newMovieDetails;
 	private boolean addMovie;
 
 	public void setNewMovieDetails(List<String> newMovieDetails) {
 		this.newMovieDetails = newMovieDetails;
-	}
-	public void addMovie() {
-		moviesToSchedule.add(newMovieDetails.get(0));
 	}
 
 	public List<String> getNewMovieDetails() {
@@ -24,6 +29,10 @@ public class MoviesToSchedule {
 
 	public boolean getAddMovie() {
 		return addMovie;
+	}
+
+	public void addMovie() {
+		moviesToSchedule.add(newMovieDetails.get(0));
 	}
 
 	public void setMoviesToSchedule(List<String> moviesToSchedule) {
@@ -45,10 +54,11 @@ public class MoviesToSchedule {
 		Movie movie = new Movie(movieTitle, year, director, duration, rating, genre, castmembers);
 		return movie;
 	}
+
 	@Override
-	public String toString(){
+	public String toString() {
 		String details = "";
-		for(String detail: moviesToSchedule) {
+		for (String detail : moviesToSchedule) {
 			details = details + detail;
 		}
 		return details;

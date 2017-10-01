@@ -1,7 +1,13 @@
 package movietickets.application;
 
 import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +18,7 @@ import movietickets.domain.model.Cinema;
 import movietickets.domain.model.CinemaRepository;
 import movietickets.domain.model.Movie;
 import movietickets.domain.model.MovieRepository;
+import movietickets.domain.model.MoviesToSchedule;
 import movietickets.domain.model.NowShowing;
 import movietickets.domain.model.NowShowingRepository;
 import movietickets.domain.model.Seats;
@@ -41,7 +48,7 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
 	public void saveMovie(Movie movie) {
 		movieRepository.save(movie);
 	}
-	
+
 	@Override
 	public PurchaseVerification bookTicket(Purchase purchase, List<String> seatNumbers) {
 		NowShowing movieScreening = nowShowingRepository.findById(purchase.getMovie());
@@ -52,7 +59,7 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
 		for (String ticket : seatNumbers) {
 			int posY = getNumber(ticket.split("-")[0]);
 			int posX = Integer.parseInt(ticket.split("-")[1]);
-			Ticket newTicket = new Ticket(movieScreening, posX, posY,movieScreening.getInfo());
+			Ticket newTicket = new Ticket(movieScreening, posX, posY, movieScreening.getInfo());
 			transaction.append(" " + newTicket.getSeatLabel());
 			ticketRepository.save(newTicket);
 		}
@@ -66,12 +73,13 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
 		List<Movie> allMovies = movieRepository.findAll();
 		return allMovies;
 	}
+
 	@Override
 	public List<String> findAllMovieTitles() {
 		List<Movie> allMovies = movieRepository.findAll();
 		List<String> movieTitles = new ArrayList<>();
-		for(Movie movie : allMovies) {
-			movieTitles.add(movie.getMovieTitle());
+		for (Movie movie : allMovies) {
+			movieTitles.add(movie.getTitle());
 		}
 		return movieTitles;
 	}
@@ -152,23 +160,86 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
 		Cinema cinema = cinemaRepository.findById(id);
 		return cinema;
 	}
+
 	@Override
 	public List<Ticket> findTicketsByScreening(NowShowing nowShowing) {
 		List<Ticket> tickets = ticketRepository.findByScreening(nowShowing);
 		return tickets;
-		
+
 	}
+
 	public int getNumber(String row) {
 		char letter = row.charAt(0);
 		int rowNumber;
-		if(row.length() == 1) {
-			rowNumber = (int) (letter - 'A' + 1); 
-		}
-		else {
+		if (row.length() == 1) {
+			rowNumber = (int) (letter - 'A' + 1);
+		} else {
 			letter = row.charAt(0);
-			rowNumber = (int) (letter - 'A' + 1) * row.length(); 
+			rowNumber = (int) (letter - 'A' + 1) * row.length();
 		}
 		return rowNumber;
+	}
+
+	@Override
+	public List<String> scheduleMovies(MoviesToSchedule moviesToSchedule, long cinemaId) {
+		Cinema cinema = cinemaRepository.findById(cinemaId);
+		LocalDateTime date = nextWednesday();
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		LocalDateTime startDate = LocalDateTime.parse(getStringDate(date.getYear(), date.getMonthValue(), date.getDayOfMonth()), formatter);
+		System.out.println(startDate.toString());
+		List<String> scheduledMovies = new ArrayList<>();
+		List<String> movies = moviesToSchedule.getMoviesToSchedule();
+		System.out.println(moviesToSchedule);
+		List<NowShowing> pendingMovies = new ArrayList<>();
+		List<LocalDateTime> schedules = new ArrayList<>();
+		for (int i = 0; i < movies.size(); i++) {
+			String movie = movies.get(i);
+			Movie pendingmovie = movieRepository.findByTitle(movie);
+			NowShowing nowShowing = new NowShowing(pendingmovie, cinema);
+			if(i == 0) {
+				schedules.add(startDate);
+				nowShowing.setSchedule(startDate);
+			} else {
+				LocalDateTime schedule = schedules.get(i-1).plusMinutes(pendingmovie.getDuration() + 15);
+				schedules.add(schedule);
+				nowShowing.setSchedule(schedule);
+			}
+			scheduledMovies.add(nowShowing.getInfo());
+			pendingMovies.add(nowShowing);
+			nowShowingRepository.save(nowShowing);
+		}
+		return scheduledMovies;
+	}
+
+	public LocalDateTime nextWednesday() {
+		Calendar date = Calendar.getInstance();
+		int diff = Calendar.WEDNESDAY - date.get(Calendar.DAY_OF_WEEK);
+		if (!(diff > 0)) {
+			diff += 7;
+		}
+
+		date.add(Calendar.DAY_OF_MONTH, diff);
+		LocalDateTime wednesday = LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault());
+		return wednesday;
+	}
+
+	public String getStringDate(int year, int month, int day) {
+		StringBuilder sb = new StringBuilder();
+		String dateString = "";
+		sb.append(year + "-");
+		if(month < 10) {
+			sb.append("0" + month + "-");
+		} else {
+			sb.append(month + "-");
+		}
+		if(day < 10) {
+			sb.append("0" + day  + " ");
+		} else {
+			sb.append(day + " ");
+		}
+		sb.append("10:30");
+		dateString = sb.toString();
+		return dateString;
 	}
 
 }

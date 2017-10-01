@@ -8,21 +8,21 @@ insert into t_cinema (maxx, maxy, venue) values (3, 3, 'Cine Adarna');
 insert into t_cinema (maxx, maxy, venue) values (3, 3, 'Cinecon Valley');
 insert into t_cinema (maxx, maxy, venue) values (3, 3, '3D IMAX');
 
-insert into t_nowshowing (date_and_time, cinema_id, movie_id, price ) values ('2017-09-29 12:31',1,1, 200);
-insert into t_nowshowing (date_and_time, cinema_id, movie_id, price ) values ('2017-09-29 12:31',2,2, 220);
-insert into t_nowshowing (date_and_time, cinema_id, movie_id, price ) values ('2017-09-29 12:31',3,3, 230);
-insert into t_nowshowing (date_and_time, cinema_id, movie_id, price ) values ('2017-09-29 14:32',1,4, 240);
-insert into t_nowshowing (date_and_time, cinema_id, movie_id, price ) values ('2017-09-29 14:08',2,5, 180);
-insert into t_nowshowing (date_and_time, cinema_id, movie_id, price ) values ('2017-09-29 15:12',3,1, 200);
-insert into t_nowshowing (date_and_time, cinema_id, movie_id, price ) values ('2017-09-29 17:13',1,2, 220);
-insert into t_nowshowing (date_and_time, cinema_id, movie_id, price ) values ('2017-09-29 17:30',2,3, 230);
-insert into t_nowshowing (date_and_time, cinema_id, movie_id, price ) values ('2017-09-29 17:13',3,4, 240);
-insert into t_nowshowing (date_and_time, cinema_id, movie_id, price ) values ('2017-09-29 19:23',1,5, 180);
-insert into t_nowshowing (date_and_time, cinema_id, movie_id, price ) values ('2017-09-29 20:11',2,1, 200);
-insert into t_nowshowing (date_and_time, cinema_id, movie_id, price ) values ('2017-09-29 19:54',3,2, 220);
-insert into t_nowshowing (date_and_time, cinema_id, movie_id, price ) values ('2017-09-29 22:12',1,3, 230);
-insert into t_nowshowing (date_and_time, cinema_id, movie_id, price ) values ('2017-09-29 22:12',2,4, 240);
-insert into t_nowshowing (date_and_time, cinema_id, movie_id, price ) values ('2017-09-29 22:04',3,5, 180);	
+-- insert into t_nowshowing (date_and_time, cinema_id, movie_id, price ) values ('2017-09-29 12:31',1,1, 200);
+-- insert into t_nowshowing (date_and_time, cinema_id, movie_id, price ) values ('2017-09-29 12:31',2,2, 220);
+-- insert into t_nowshowing (date_and_time, cinema_id, movie_id, price ) values ('2017-09-29 12:31',3,3, 230);
+-- insert into t_nowshowing (date_and_time, cinema_id, movie_id, price ) values ('2017-09-29 14:32',1,4, 240);
+-- insert into t_nowshowing (date_and_time, cinema_id, movie_id, price ) values ('2017-09-29 14:08',2,5, 180);
+-- insert into t_nowshowing (date_and_time, cinema_id, movie_id, price ) values ('2017-09-29 15:12',3,1, 200);
+-- insert into t_nowshowing (date_and_time, cinema_id, movie_id, price ) values ('2017-09-29 17:13',1,2, 220);
+-- insert into t_nowshowing (date_and_time, cinema_id, movie_id, price ) values ('2017-09-29 17:30',2,3, 230);
+-- insert into t_nowshowing (date_and_time, cinema_id, movie_id, price ) values ('2017-09-29 17:13',3,4, 240);
+-- insert into t_nowshowing (date_and_time, cinema_id, movie_id, price ) values ('2017-09-29 19:23',1,5, 180);
+-- insert into t_nowshowing (date_and_time, cinema_id, movie_id, price ) values ('2017-09-29 20:11',2,1, 200);
+-- insert into t_nowshowing (date_and_time, cinema_id, movie_id, price ) values ('2017-09-29 19:54',3,2, 220);
+-- insert into t_nowshowing (date_and_time, cinema_id, movie_id, price ) values ('2017-09-29 22:12',1,3, 230);
+-- insert into t_nowshowing (date_and_time, cinema_id, movie_id, price ) values ('2017-09-29 22:12',2,4, 240);
+-- insert into t_nowshowing (date_and_time, cinema_id, movie_id, price ) values ('2017-09-29 22:04',3,5, 180);	
 
 insert into t_seats(posx, posy, seat, seat_name, cinema_id ) values (1, 1, true, 'A-1', 1);
 insert into t_seats(posx, posy, seat, seat_name, cinema_id ) values (2, 1, true, 'A-2', 1);
@@ -54,7 +54,7 @@ insert into t_seats(posx, posy, seat, seat_name, cinema_id ) values (1, 3, true,
 insert into t_seats(posx, posy, seat, seat_name, cinema_id ) values (2, 3, true, 'C-2', 3);
 insert into t_seats(posx, posy, seat, seat_name, cinema_id ) values (3, 3, true, 'C-3', 3);		
 
-insert into t_ticket(posx, posy, seat_label, now_showing_id ) values (1, 3, 'C1', 1);
+-- insert into t_ticket(posx, posy, seat_label, now_showing_id ) values (1, 3, 'C1', 1);
 
 
 

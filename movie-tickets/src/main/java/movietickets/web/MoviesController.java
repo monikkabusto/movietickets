@@ -4,7 +4,15 @@ import static org.springframework.web.bind.annotation.RequestMethod.GET;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -102,12 +110,14 @@ public class MoviesController {
 	@RequestMapping(method = GET, value = "schedule")
 	public String scheduleMovies(@ModelAttribute("MoviesToSchedule") MoviesToSchedule moviesToSchedule, Model model) {
 		model.addAttribute("existingMovies", bookingApplicationService.findAllMovieTitles());
+		model.addAttribute("cinemas", bookingApplicationService.findAllCinemas());
 		model.addAttribute("moviesToSchedule", moviesToSchedule);
 		return PATH + "/schedule";
 	}
 	@RequestMapping(method = POST, value = "schedule")
 	public String scheduledMovies(@ModelAttribute("MoviesToSchedule") MoviesToSchedule moviesToSchedule, Model model) {
 		model.addAttribute("existingMovies", bookingApplicationService.findAllMovieTitles());
+		model.addAttribute("cinemas", bookingApplicationService.findAllCinemas());
 		if(moviesToSchedule.getAddMovie()==true) {
 			moviesToSchedule.addMovie();
 			bookingApplicationService.saveMovie(moviesToSchedule.storeNewMovie());
@@ -115,6 +125,14 @@ public class MoviesController {
 		System.out.println(moviesToSchedule.toString());
 		model.addAttribute("cmd",new MoviesToSchedule());
 		return "redirect:/schedule";
+	}
+
+	@RequestMapping(value = "scheduled", method = POST)
+	public String showScheduledMovies(@RequestParam("cinemaId") long cinemaId, @ModelAttribute("MoviesToSchedule") MoviesToSchedule moviesToSchedule, Model model) {
+		model.addAttribute("cinema", bookingApplicationService.findCinemaById(cinemaId));
+		List<String> scheduledMovies = bookingApplicationService.scheduleMovies(moviesToSchedule, cinemaId);
+		model.addAttribute("moviesToSchedule", scheduledMovies);
+		return PATH + "/scheduled";
 	}
 
 }

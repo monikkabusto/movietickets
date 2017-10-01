@@ -4,6 +4,7 @@ import java.util.List;
 
 import movietickets.domain.model.Cinema;
 import movietickets.domain.model.Movie;
+import movietickets.domain.model.MoviesToSchedule;
 import movietickets.domain.model.NowShowing;
 import movietickets.domain.model.Seats;
 import movietickets.domain.model.Ticket;
@@ -41,4 +42,6 @@ public interface BookingApplicationService {
 	List<String> findAllMovieTitles();
 
 	void saveMovie(Movie movie);
+
+	List<String> scheduleMovies(MoviesToSchedule moviesToSchedule, long cinemaId);
 }

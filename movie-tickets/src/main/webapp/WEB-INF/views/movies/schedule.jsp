@@ -109,15 +109,11 @@ input[type=text]:focus {
 	<h1>MovieX Cinema Scheduler</h1>
 	<h2>Select Movies to Schedule for next week</h2>
 	<form:form method="POST" modelAttribute="MoviesToSchedule"
-		action="schedule">
+		action="" name="form">
 		<form:checkboxes path="moviesToSchedule" items="${existingMovies}"
 			delimiter="<br/><p></p>" />
 		<p></p>
 		<h3>Would you like to add another movie?</h3>
-		<!-- 		Yes <input type="radio" onclick="javascript:yesnoCheck();"
-			name="yesno" id="yesCheck"> 
-		No <input type="radio" onclick="javascript:yesnoCheck();" name="yesno"
-			id="noCheck"> -->
 
 		<form:radiobutton name="yesno" id="yesCheck"
 			onclick="javascript:yesnoCheck();" path="addMovie" value="true"
@@ -153,11 +149,17 @@ input[type=text]:focus {
 			<span>Cast :</span><form:input type="text" id="rating" name="castmembers" path="newMovieDetails"/>
 			</div>
 			<p>
-				<input class="btn" type="submit" value="AddMovie" />
+				<input class="btn" type="submit" value="AddMovie" onclick="addMovie();"/>
 			</p>
 		</div>
 
-		<input class="btn" type="submit" value="Schedule Movies" />
+		<input class="btn" type="submit" value="Schedule Movies" onclick="scheduleMovies();"/>
+		<label> Cinema : <select name="cinemaId">
+				<c:forEach var="cinema" items="${cinemas}" varStatus="i">
+					<option value="${cinema.id}">${cinema.venue}</option>
+				</c:forEach>
+		</select>
+		</label>
 
 
 	</form:form>
@@ -170,6 +172,16 @@ input[type=text]:focus {
 			document.getElementById('ifYes').style.display = 'none';
 
 	}
+</script>
+<script>
+function addMovie()
+{
+ document.form.action ="schedule";
+}
+function scheduleMovies()
+{
+document.form.action = "scheduled";
+}
 </script>
 </html>
 
