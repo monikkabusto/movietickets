@@ -24,7 +24,6 @@ body {
 
 .carousel {
 	background: #f2e8e2;
-	margin-top: 20px;
 	width: 100%;
 	max-width: 400px;
 	padding: 0px;
@@ -87,7 +86,7 @@ cinema {
 	</div>
 	<div class="container-fluid row">
 		<div class="movieposters col-xs-6 col-md-6">
-			<div id="myCarousel" class="carousel slide" data-ride="carousel">
+			<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="2400">
 				<div class="carousel-inner">
 					<div class="item active">
 						<img src="${pageContext.request.contextPath}/images/0.jpg" />

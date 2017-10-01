@@ -1,5 +1,6 @@
 package movietickets.application;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,13 +37,17 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
 	}
 
 	@Override
+	public void saveMovie(Movie movie) {
+		movieRepository.save(movie);
+	}
+	
+	@Override
 	public PurchaseVerification bookTicket(Purchase purchase, List<String> seatNumbers) {
 		NowShowing movieScreening = nowShowingRepository.findById(purchase.getMovie());
 		Movie movie = movieRepository.findById(movieScreening.getMovieId());
 		movie.UpdateSales(seatNumbers.size());
 		StringBuilder transaction = new StringBuilder();
 		transaction.append(movieScreening.toString());
-		System.out.println("PARSING SEATS");
 		for (String ticket : seatNumbers) {
 			int posY = getNumber(ticket.split("-")[0]);
 			int posX = Integer.parseInt(ticket.split("-")[1]);
@@ -59,6 +64,15 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
 	public List<Movie> findAllMovies() {
 		List<Movie> allMovies = movieRepository.findAll();
 		return allMovies;
+	}
+	@Override
+	public List<String> findAllMovieTitles() {
+		List<Movie> allMovies = movieRepository.findAll();
+		List<String> movieTitles = new ArrayList<>();
+		for(Movie movie : allMovies) {
+			movieTitles.add(movie.getMovieTitle());
+		}
+		return movieTitles;
 	}
 
 	@Transactional(readOnly = true)

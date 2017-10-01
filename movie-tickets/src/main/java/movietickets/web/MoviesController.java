@@ -1,6 +1,7 @@
 package movietickets.web;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
+import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -16,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import movietickets.application.BookingApplicationService;
 import movietickets.application.Purchase;
 import movietickets.domain.model.Cinema;
+import movietickets.domain.model.Movie;
+import movietickets.domain.model.MoviesToSchedule;
 import movietickets.domain.model.NowShowing;
 import movietickets.domain.model.Seats;
 import movietickets.domain.model.Transaction;
@@ -46,7 +49,7 @@ public class MoviesController {
 		return PATH + "/book";
 	}
 
-	@RequestMapping(value = "showScreening", method = RequestMethod.GET)
+	@RequestMapping(value = "showScreening", method = GET)
 	public String showMovieScreening(@RequestParam("id") long id, Model model) {
 		model.addAttribute("movieid", id);
 		model.addAttribute("movieTitle", bookingApplicationService.findMovieById(id).getMovieTitle());
@@ -62,31 +65,45 @@ public class MoviesController {
 		cinema = bookingApplicationService.setAlphaSeats(cinema);
 		List<Seats> cinemaLayout = bookingApplicationService.findAllSeats(cinema);
 		List<String> bookedSeats = new ArrayList<>();
-		for(Seats seat : cinemaLayout) {
+		for (Seats seat : cinemaLayout) {
 			bookedSeats.add(seat.getSeatName());
 		}
 		model.addAttribute("transaction", new Transaction());
 		model.addAttribute("bookedSeats", bookedSeats);
 		model.addAttribute("price", nowShowing.getPrice());
-		model.addAttribute("showId", nowShowing.getId() );
-//		model.addAttribute("maxY", cinema.getMaxY());
-//		model.addAttribute("maxX", cinema.getMaxX());
+		model.addAttribute("showId", nowShowing.getId());
 		return PATH + "/seats";
 	}
 
-	@RequestMapping(method = RequestMethod.POST, value = "printTicket")
+	@RequestMapping(method = POST, value = "printTicket")
 	public String processSeats(@ModelAttribute("transaction") Transaction bookedSeats, Model model,
-			@RequestParam("price") BigDecimal price,
-			@RequestParam("showId") long showId) {
+			@RequestParam("price") BigDecimal price, @RequestParam("showId") long showId) {
 		String movieDetails = bookingApplicationService.findScreening(showId).getMovieTitle();
 		bookedSeats.makeTransaction(price, showId, movieDetails);
 		model.addAttribute("tickets", bookedSeats.getBookedSeats());
 		model.addAttribute("transaction", bookedSeats.toString());
-		
 		Purchase purchase = new Purchase(bookedSeats.getTotalCost(), showId, bookedSeats.getTotalSeats());
 		bookingApplicationService.bookTicket(purchase, bookedSeats.getBookedSeats());
 		return PATH + "/printTicket";
 
+	}
+
+	@RequestMapping(method = GET, value = "schedule")
+	public String scheduleMovies(@ModelAttribute("MoviesToSchedule") MoviesToSchedule moviesToSchedule, Model model) {
+		model.addAttribute("existingMovies", bookingApplicationService.findAllMovieTitles());
+		model.addAttribute("moviesToSchedule", moviesToSchedule);
+		return PATH + "/schedule";
+	}
+	@RequestMapping(method = POST, value = "schedule")
+	public String scheduledMovies(@ModelAttribute("MoviesToSchedule") MoviesToSchedule moviesToSchedule, Model model) {
+		model.addAttribute("existingMovies", bookingApplicationService.findAllMovieTitles());
+		if(moviesToSchedule.getAddMovie()==true) {
+			moviesToSchedule.addMovie();
+			bookingApplicationService.saveMovie(moviesToSchedule.storeNewMovie());
+		}
+		System.out.println(moviesToSchedule.toString());
+		model.addAttribute("cmd",new MoviesToSchedule());
+		return "redirect:/schedule";
 	}
 
 }

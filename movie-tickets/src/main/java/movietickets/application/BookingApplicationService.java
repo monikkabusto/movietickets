@@ -37,4 +37,8 @@ public interface BookingApplicationService {
 	Cinema setAlphaSeats(Cinema cinema);
 
 	List<Ticket> findTicketsByScreening(NowShowing nowShowing);
+
+	List<String> findAllMovieTitles();
+
+	void saveMovie(Movie movie);
 }

@@ -8,7 +8,7 @@ prints the tickets.
 - several cinemas (each has own layout) 
 - movie and time [done]
 - seat [done]
-- verification (payment, print tickets)
+- verification (payment, print tickets) *PDF*
 
 SERVICE REPRESENTATIVE
 - movie screening schedules [done]
@@ -20,14 +20,16 @@ SERVICE REPRESENTATIVE
 - prepare schedule every week
 
 ADDED TO DO:
--update taken seats
-
+-update taken seats 
+	As a service representative, I want to display the available seats of a given movie screening schedule, so I can let the customer choose seat(s). 
+-
+As a system administrator, I want to create optimal movie screening schedules. A movie screening schedule in a theater is designed for a week. In the Philippines, for example, a new movie week starts each Wednesday. Therefore, a movie theater has to prepare a new movie schedule at the beginning of every week. For each week's movie program, management must determine what movies will be shown, on which screens, on which days, and at what times. Typically, on each screen, a theater can accommodate three to five showings per day (3-5 showings per day), where a &ldquo;showing&rdquo; is defined as the screening of one movie, including trailers and advertisements. This means that a 6-screen theater needs to program around 148 showings per week (24 showings a day &times; 7 days a week).
 
 ## Stories
 
 As a service representative, I want to see the movie screening schedules, so I can inform the customer and ask for his/her choice. [done]
 
-As a service representative, I want to display the available seats of a given movie screening schedule, so I can let the customer choose seat(s). 
+As a service representative, I want to display the available seats of a given movie screening schedule, so I can let the customer choose seat(s).
 
 As a service representative, I want to book selected seats and print tickets. (Note: Other service representatives are likely to be booking for the same movie seats, on behalf of the customer)
 
