@@ -85,6 +85,11 @@ cinema {
 	width: 130px;
 	overflow: hidden;
 }
+
+div.scroll {
+	height: 60px;
+	overflow: scroll;
+}
 </style>
 </head>
 <body>
@@ -131,12 +136,14 @@ cinema {
 						alt="Movie X Cinema" />
 				</div>
 				<p>${movie.movieTitle}</p>
-				<c:forEach var="screening" items="${screenings}">
-					<c:if test="${screening.movieId == i.count}">
-						<c:out value="${screening}" />
-						<br>
-					</c:if>
-				</c:forEach>
+				<div class="scroll">
+					<c:forEach var="screening" items="${screenings}">
+						<c:if test="${screening.movieId == i.count}">
+							<c:out value="${screening}" />
+							<br>
+						</c:if>
+					</c:forEach>
+				</div>
 			</div>
 		</c:forEach>
 	</div>

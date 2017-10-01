@@ -185,28 +185,28 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
 		Cinema cinema = cinemaRepository.findById(cinemaId);
 		LocalDateTime date = nextWednesday();
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
-		LocalDateTime startDate = LocalDateTime.parse(getStringDate(date.getYear(), date.getMonthValue(), date.getDayOfMonth()), formatter);
-		System.out.println(startDate.toString());
 		List<String> scheduledMovies = new ArrayList<>();
 		List<String> movies = moviesToSchedule.getMoviesToSchedule();
-		System.out.println(moviesToSchedule);
-		List<NowShowing> pendingMovies = new ArrayList<>();
-		List<LocalDateTime> schedules = new ArrayList<>();
-		for (int i = 0; i < movies.size(); i++) {
-			String movie = movies.get(i);
-			Movie pendingmovie = movieRepository.findByTitle(movie);
-			NowShowing nowShowing = new NowShowing(pendingmovie, cinema);
-			if(i == 0) {
-				schedules.add(startDate);
-				nowShowing.setSchedule(startDate);
-			} else {
-				LocalDateTime schedule = schedules.get(i-1).plusMinutes(pendingmovie.getDuration() + 15);
-				schedules.add(schedule);
-				nowShowing.setSchedule(schedule);
+
+		for (int j = 0; j <= 6; j++) {
+			LocalDateTime startDate = LocalDateTime
+					.parse(getStringDate(date.getYear(), date.getMonthValue(), date.getDayOfMonth() + j), formatter);
+			List<LocalDateTime> schedules = new ArrayList<>();
+			for (int i = 0; i < movies.size(); i++) {
+				String movie = movies.get(i);
+				Movie pendingmovie = movieRepository.findByTitle(movie);
+				NowShowing nowShowing = new NowShowing(pendingmovie, cinema);
+				if (i == 0) {
+					schedules.add(startDate);
+					nowShowing.setSchedule(startDate);
+				} else {
+					LocalDateTime schedule = schedules.get(i - 1).plusMinutes(pendingmovie.getDuration() + 15);
+					schedules.add(schedule);
+					nowShowing.setSchedule(schedule);
+				}
+				scheduledMovies.add(nowShowing.getInfo());
+				nowShowingRepository.save(nowShowing);
 			}
-			scheduledMovies.add(nowShowing.getInfo());
-			pendingMovies.add(nowShowing);
-			nowShowingRepository.save(nowShowing);
 		}
 		return scheduledMovies;
 	}
@@ -227,13 +227,13 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
 		StringBuilder sb = new StringBuilder();
 		String dateString = "";
 		sb.append(year + "-");
-		if(month < 10) {
+		if (month < 10) {
 			sb.append("0" + month + "-");
 		} else {
 			sb.append(month + "-");
 		}
-		if(day < 10) {
-			sb.append("0" + day  + " ");
+		if (day < 10) {
+			sb.append("0" + day + " ");
 		} else {
 			sb.append(day + " ");
 		}
