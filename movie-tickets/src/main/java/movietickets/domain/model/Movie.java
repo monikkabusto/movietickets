@@ -23,7 +23,7 @@ public class Movie {
 	private String rating;
 	private String genre;
 	private String castmembers;
-
+	private String imageName;
 	public Movie(String movieTitle, Integer year, String director, Integer duration, String rating,
 			String genre, String castmembers) {
 		super();
@@ -34,14 +34,23 @@ public class Movie {
 		this.rating = rating;
 		this.genre = genre;
 		this.castmembers = castmembers;
+		this.imageName = "default.jpg";
 	}
-
+	public String getImageName() {
+		return imageName;
+	}
+	public void setImageName(String imageName) {
+		this.imageName = imageName;
+	}
 	public Long getId() {
 		return id;
 	}
 	
 	public String getMovieTitle() {
 		return movieTitle + " (" + year + ")";
+	}
+	public String getTitle() {
+		return movieTitle;
 	}
 
 	public Integer getYear() {

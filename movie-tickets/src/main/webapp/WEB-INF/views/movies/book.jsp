@@ -137,7 +137,7 @@ h2 {
 		<c:forEach var="movie" items="${movies}" varStatus="i">
 			<div class="col-6 col-md-3 nowshowing">
 				<img class="imageSmall"
-					src="${pageContext.request.contextPath}/images/${movie.id}.jpg" />
+					src="${pageContext.request.contextPath}/images/${movie.imageName}" />
 				<p>${movie.movieTitle}</p>
 				<form:form action="showScreening" method="get">
 					<input type="hidden" name="id" value="${movie.id}"/>

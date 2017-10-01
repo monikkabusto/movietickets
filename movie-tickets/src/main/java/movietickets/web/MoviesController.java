@@ -56,7 +56,8 @@ public class MoviesController {
 
 	@RequestMapping(value = "showScreening", method = GET)
 	public String showMovieScreening(@RequestParam("id") long id, Model model) {
-		model.addAttribute("movieid", id);
+		
+		model.addAttribute("movieid", bookingApplicationService.findMovieById(id).getTitle());
 		model.addAttribute("movieTitle", bookingApplicationService.findMovieById(id).getMovieTitle());
 		model.addAttribute("screenings", bookingApplicationService.findMovieScreenings(id));
 		return PATH + "/screening";

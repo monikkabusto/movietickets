@@ -71,6 +71,20 @@ h1 {
 cinema {
 	color: #5f5f87;
 }
+
+.main {
+	position: absolute;
+}
+
+.poster {
+	text-align: center;
+	color: white;
+	background: black;
+	align: right;
+	height: 200px;
+	width: 130px;
+	overflow: hidden;
+}
 </style>
 </head>
 <body>
@@ -84,9 +98,10 @@ cinema {
 			<fmt:message key="welcome.caption" />
 		</p>
 	</div>
-	<div class="container-fluid row">
+	<div class="container-fluid row main">
 		<div class="movieposters col-xs-6 col-md-6">
-			<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="2400">
+			<div id="myCarousel" class="carousel slide" data-ride="carousel"
+				data-interval="2400">
 				<div class="carousel-inner">
 					<div class="item active">
 						<img src="${pageContext.request.contextPath}/images/0.jpg" />
@@ -94,7 +109,7 @@ cinema {
 					<c:forEach var="movie" items="${movies}">
 						<div class="item">
 							<img
-								src="${pageContext.request.contextPath}/images/${movie.id}.jpg" />
+								src="${pageContext.request.contextPath}/images/${movie.imageName}" />
 							<div class="carousel-caption"></div>
 						</div>
 					</c:forEach>
@@ -110,8 +125,11 @@ cinema {
 		</div>
 		<c:forEach var="movie" items="${movies}" varStatus="i">
 			<div class="col-xs-2 col-m6-2 nowshowing">
-				<img class="imageSmall"
-					src="${pageContext.request.contextPath}/images/${movie.id}.jpg" />
+				<div class="poster">
+					<img class="imageSmall"
+						src="${pageContext.request.contextPath}/images/${movie.imageName}"
+						alt="Movie X Cinema" />
+				</div>
 				<p>${movie.movieTitle}</p>
 				<c:forEach var="screening" items="${screenings}">
 					<c:if test="${screening.movieId == i.count}">
