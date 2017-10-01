@@ -25,15 +25,28 @@ public class Ticket {
 	private String seatLabel;
 	private String movieDetails;
 	
-	public Ticket(NowShowing nowShowing, int posX, int posY) {
+	public Ticket(NowShowing nowShowing, int posX, int posY, String movieDetails) {
 		this.nowShowing = nowShowing;
 		this.posX = posX;
 		this.posY = posY;
 		this.seatLabel = getAlpha(posY) + posX;
+		this.movieDetails = movieDetails;
 	}
-
+	public int getPosX() {
+		return posX;
+	}
+	public int getPosY() {
+		return posY;
+	}
+	
 	public String getSeatLabel() {
 		return seatLabel;
+	}
+	public void setMovieDetails(String movieDetails) {
+		this.movieDetails = movieDetails;
+	}
+	public String getMovieDetails() {
+		return movieDetails;
 	}
 	
 	public NowShowing getNowShowing() {

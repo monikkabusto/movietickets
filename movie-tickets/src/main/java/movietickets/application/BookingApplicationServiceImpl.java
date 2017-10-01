@@ -46,7 +46,7 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
 		for (String ticket : seatNumbers) {
 			int posY = getNumber(ticket.split("-")[0]);
 			int posX = Integer.parseInt(ticket.split("-")[1]);
-			Ticket newTicket = new Ticket(movieScreening, posX, posY);
+			Ticket newTicket = new Ticket(movieScreening, posX, posY,movieScreening.getInfo());
 			transaction.append(" " + newTicket.getSeatLabel());
 			ticketRepository.save(newTicket);
 		}

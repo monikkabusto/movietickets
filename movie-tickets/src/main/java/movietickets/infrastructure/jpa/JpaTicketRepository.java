@@ -8,7 +8,6 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import common.infrastructure.persistence.jpa.JpaGenericRepository;
-import movietickets.domain.model.Cinema;
 import movietickets.domain.model.NowShowing;
 import movietickets.domain.model.Ticket;
 import movietickets.domain.model.TicketRepository;

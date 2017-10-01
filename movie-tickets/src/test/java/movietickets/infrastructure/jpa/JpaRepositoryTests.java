@@ -22,7 +22,6 @@ import movietickets.domain.model.MovieRepository;
 import movietickets.domain.model.NowShowing;
 import movietickets.domain.model.NowShowingRepository;
 import movietickets.domain.model.Seats;
-import movietickets.domain.model.Ticket;
 
 @Rollback(false)
 @RunWith(SpringRunner.class)
