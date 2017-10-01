@@ -5,11 +5,13 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+import movietickets.domain.model.Transaction;
+
 public class Purchase {
-	private final BigDecimal payment;
+	private BigDecimal payment;
 	private Date date;
-	private final long movie;
-	private final int numberOfSeats;
+	private long movie;
+	private int numberOfSeats;
 
 	public Purchase(BigDecimal payment, long movie, int numberOfSeats) {
 		super();
@@ -30,6 +32,15 @@ public class Purchase {
 	}
 	public int getNumberOfSeats() {
 		return numberOfSeats;
+	}
+	public int setNumberOfSeats() {
+		return numberOfSeats;
+	}
+	public void makePurchase(Transaction transaction) {
+		this.payment = transaction.getPrice();
+		this.date = today();
+		this.movie = transaction.getNowShowing();
+		this.numberOfSeats = transaction.getBookedSeats().size();
 	}
 
 	private static Date today() {

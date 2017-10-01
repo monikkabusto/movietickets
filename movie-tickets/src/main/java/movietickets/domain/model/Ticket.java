@@ -20,9 +20,7 @@ public class Ticket {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	private NowShowing nowShowing;
-	@SuppressWarnings("unused")
 	private int posX;
-	@SuppressWarnings("unused")
 	private int posY;
 	private String seatLabel;
 	private String movieDetails;

@@ -33,6 +33,7 @@ body {
 	<c:forEach var="seat" items="${tickets}">
     ${seat}<br />
 	</c:forEach>
+	<p>${transaction}</p>
 
 </body>
 </html>

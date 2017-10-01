@@ -76,6 +76,8 @@ label {
 	<form:form method="POST" modelAttribute="transaction" action="printTicket">
 		<form:checkboxes path="bookedSeats" items="${bookedSeats}" />
 		<br>
+		<input type="hidden" name="price" value="${price}"/>
+		<input type="hidden" name="showId" value="${showId}"/>
 		<input class="btn" type="submit" value="Book Tickets" /> 
 	</form:form>
 

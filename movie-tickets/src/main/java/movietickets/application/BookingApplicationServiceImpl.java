@@ -32,7 +32,7 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
 		this.movieRepository = movieRepository;
 		this.cinemaRepository = cinemaRepository;
 		this.nowShowingRepository = nowShowingRepository;
-		// this.ticketRepository = ticketRepository;
+		this.ticketRepository = ticketRepository;
 	}
 
 	@Override
@@ -42,12 +42,13 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
 		movie.UpdateSales(seatNumbers.size());
 		StringBuilder transaction = new StringBuilder();
 		transaction.append(movieScreening.toString());
-
+		System.out.println("PARSING SEATS");
 		for (String ticket : seatNumbers) {
-			int posY = Integer.parseInt(ticket.split("-")[0]);
+			int posY = getNumber(ticket.split("-")[0]);
 			int posX = Integer.parseInt(ticket.split("-")[1]);
 			Ticket newTicket = new Ticket(movieScreening, posX, posY);
 			transaction.append(" " + newTicket.getSeatLabel());
+			ticketRepository.save(newTicket);
 		}
 		String transactionID = transaction.toString();
 		return new PurchaseVerification(transactionID);
@@ -141,6 +142,18 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
 		List<Ticket> tickets = ticketRepository.findByScreening(nowShowing);
 		return tickets;
 		
+	}
+	public int getNumber(String row) {
+		char letter = row.charAt(0);
+		int rowNumber;
+		if(row.length() == 1) {
+			rowNumber = (int) (letter - 'A' + 1); 
+		}
+		else {
+			letter = row.charAt(0);
+			rowNumber = (int) (letter - 'A' + 1) * row.length(); 
+		}
+		return rowNumber;
 	}
 
 }

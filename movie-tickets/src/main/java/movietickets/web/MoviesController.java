@@ -2,20 +2,20 @@ package movietickets.web;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import movietickets.application.BookingApplicationService;
+import movietickets.application.Purchase;
 import movietickets.domain.model.Cinema;
-import movietickets.domain.model.Member;
 import movietickets.domain.model.NowShowing;
 import movietickets.domain.model.Seats;
 import movietickets.domain.model.Transaction;
@@ -67,18 +67,24 @@ public class MoviesController {
 		}
 		model.addAttribute("transaction", new Transaction());
 		model.addAttribute("bookedSeats", bookedSeats);
-		model.addAttribute("title", nowShowing.getMovieTitle() + " " + nowShowing.toString());
-		model.addAttribute("maxY", cinema.getMaxY());
-		model.addAttribute("maxX", cinema.getMaxX());
+		model.addAttribute("price", nowShowing.getPrice());
+		model.addAttribute("showId", nowShowing.getId() );
+//		model.addAttribute("maxY", cinema.getMaxY());
+//		model.addAttribute("maxX", cinema.getMaxX());
 		return PATH + "/seats";
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "printTicket")
-	public String processSeats(@ModelAttribute("transaction") Transaction bookedSeats, Model model) {
+	public String processSeats(@ModelAttribute("transaction") Transaction bookedSeats, Model model,
+			@RequestParam("price") BigDecimal price,
+			@RequestParam("showId") long showId) {
+		String movieDetails = bookingApplicationService.findScreening(showId).getMovieTitle();
+		bookedSeats.makeTransaction(price, showId, movieDetails);
 		model.addAttribute("tickets", bookedSeats.getBookedSeats());
-		for(String seats: bookedSeats.getBookedSeats()) {
-			System.out.println(seats);
-		}
+		model.addAttribute("transaction", bookedSeats.toString());
+		
+		Purchase purchase = new Purchase(bookedSeats.getTotalCost(), showId, bookedSeats.getTotalSeats());
+		bookingApplicationService.bookTicket(purchase, bookedSeats.getBookedSeats());
 		return PATH + "/printTicket";
 
 	}
