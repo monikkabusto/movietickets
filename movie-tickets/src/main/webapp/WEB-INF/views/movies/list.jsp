@@ -90,8 +90,11 @@ cinema {
 }
 
 div.scroll {
+	color: black;
 	height: 60px;
 	overflow: scroll;
+	background-color: rgb(220,220,220);
+	width: 190px;
 }
 
 .fill:hover, .fill:focus {

@@ -96,6 +96,7 @@ input[type=text]:focus {
 #addMovie {
 	display: none;
 }
+
 .nav {
 	margin-right: 10px;
 	margin-top: 10px;
@@ -105,6 +106,7 @@ input[type=text]:focus {
 .btn:hover, .btn:focus {
 	box-shadow: inset 0 0 0 2em var(- -hover);
 }
+
 myb {
 	float: right;
 }
@@ -120,7 +122,8 @@ myb {
 	}
 </script>
 <body>
-	<security:authorize access="isAuthenticated()">
+	<div class="nav">
+		<security:authorize access="isAuthenticated()">
 			<c:url var="logoutUrl" value='/logout' />
 			<button class="btn btn-info myb"
 				onclick="getElementById('_logoutForm').submit(); return false;">
@@ -128,11 +131,12 @@ myb {
 				<form:form id="_logoutForm" action="${logoutUrl}" method="POST"
 					cssClass="hidden"></form:form>
 			</button>
-	</security:authorize>
+		</security:authorize>
+	</div>
 	<h1>MovieX Cinema Scheduler</h1>
 	<h2>Select Movies to Schedule for next week</h2>
-	<form:form method="POST" modelAttribute="MoviesToSchedule"
-		action="" name="form">
+	<form:form method="POST" modelAttribute="MoviesToSchedule" action=""
+		name="form">
 		<form:checkboxes path="moviesToSchedule" items="${existingMovies}"
 			delimiter="<br/><p></p>" />
 		<p></p>
@@ -154,29 +158,40 @@ myb {
 			</div>
 			<div class="container">
 				<span>Director :</span>
-				<form:input label="director" path="newMovieDetails" id="director" name="director" />
+				<form:input label="director" path="newMovieDetails" id="director"
+					name="director" />
 			</div>
 			<div class="container">
-				<span>Year :</span><form:input path="newMovieDetails" id="year" name="year"/>
+				<span>Year :</span>
+				<form:input path="newMovieDetails" id="year" name="year" />
 			</div>
 			<div class="container">
-				<span>Duration :</span><form:input id="duration" name="duration" path="newMovieDetails"/>
+				<span>Duration :</span>
+				<form:input id="duration" name="duration" path="newMovieDetails" />
 			</div>
 			<div class="container">
-			<span>Rating :</span><form:input label="rating" path="newMovieDetails" id="rating" name="rating"/>
+				<span>Rating :</span>
+				<form:input label="rating" path="newMovieDetails" id="rating"
+					name="rating" />
 			</div>
 			<div class="container">
-			<span>Genre :</span><form:input type="text" path="newMovieDetails" id="rating" name="genre"/>
+				<span>Genre :</span>
+				<form:input type="text" path="newMovieDetails" id="rating"
+					name="genre" />
 			</div>
 			<div class="container">
-			<span>Cast :</span><form:input type="text" id="rating" name="castmembers" path="newMovieDetails"/>
+				<span>Cast :</span>
+				<form:input type="text" id="rating" name="castmembers"
+					path="newMovieDetails" />
 			</div>
 			<p>
-				<input class="btn" type="submit" value="AddMovie" onclick="addMovie();"/>
+				<input class="btn" type="submit" value="AddMovie"
+					onclick="addMovie();" />
 			</p>
 		</div>
 
-		<input class="btn" type="submit" value="Schedule Movies" onclick="scheduleMovies();"/>
+		<input class="btn" type="submit" value="Schedule Movies"
+			onclick="scheduleMovies();" />
 		<label> Cinema : <select name="cinemaId">
 				<c:forEach var="cinema" items="${cinemas}" varStatus="i">
 					<option value="${cinema.id}">${cinema.venue}</option>
@@ -197,14 +212,12 @@ myb {
 	}
 </script>
 <script>
-function addMovie()
-{
- document.form.action ="schedule";
-}
-function scheduleMovies()
-{
-document.form.action = "scheduled";
-}
+	function addMovie() {
+		document.form.action = "schedule";
+	}
+	function scheduleMovies() {
+		document.form.action = "scheduled";
+	}
 </script>
 </html>
 
