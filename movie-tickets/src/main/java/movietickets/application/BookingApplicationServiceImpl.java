@@ -1,5 +1,6 @@
 package movietickets.application;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,7 +46,7 @@ public class BookingApplicationServiceImpl implements BookingApplicationService 
 	public PurchaseVerification bookTicket(Purchase purchase, List<String> seatNumbers) {
 		NowShowing movieScreening = nowShowingRepository.findById(purchase.getMovie());
 		Movie movie = movieRepository.findById(movieScreening.getMovieId());
-		movie.UpdateSales(seatNumbers.size());
+		movie.UpdateSales(movieScreening.getPrice().multiply(new BigDecimal(seatNumbers.size())));
 		StringBuilder transaction = new StringBuilder();
 		transaction.append(movieScreening.toString());
 		for (String ticket : seatNumbers) {

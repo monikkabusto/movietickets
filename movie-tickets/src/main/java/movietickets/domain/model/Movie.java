@@ -1,5 +1,7 @@
 package movietickets.domain.model;
 
+import java.math.BigDecimal;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,7 +21,7 @@ public class Movie {
 	private Integer year;
 	private String director;
 	private Integer duration;
-	private int sales = 0;
+	private BigDecimal sales = new BigDecimal(0);
 	private String rating;
 	private String genre;
 	private String castmembers;
@@ -65,8 +67,8 @@ public class Movie {
 		return duration;
 	}
 
-	public void UpdateSales(int ticketsSold) {
-		sales = sales + ticketsSold;
+	public void UpdateSales(BigDecimal ticketsSold) {
+		sales = sales.add(ticketsSold);
 	}
 
 	public String getRating() {
@@ -89,6 +91,12 @@ public class Movie {
 	
 	public Movie() {
 		// required by persistence layer
+	}
+	public BigDecimal getSales() {
+		return sales;
+	}
+	public void setSales(BigDecimal sales) {
+		this.sales = sales;
 	}
 
 	@Override

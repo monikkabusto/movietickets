@@ -22,38 +22,45 @@ body {
 	font-family: 'Oswald', sans-serif;
 	background:
 		url(http://www.zimknot.co.zw/wp-content/uploads/2016/07/Savin-NY-Website-Background-Web.jpg);
-	text-align: center;
+	text-align:center;
 }
-
-h1 {
-	color: #b04553;
+.nowshowing {
+	padding: 0px 0px 0px 0px;
+	margin-bottom: 20px;
 }
-
-h2 {
-	color: #5f5f87;
+.nowshowing p {
+	color: #d98c9e;
+	text-shadow: 2px 2px 8px #d7eae5;
 }
 
 .imageSmall {
 	align: right;
-	height: 600px;
+	height: 200px;
 	overflow: hidden;
 }
+h1 {
+	color: #b04553;
+}
+.price {
+	color: #1c0e17;
+}
+
 </style>
 </head>
 <body>
 	<h1>Sales Report for All Movie Screenings</h1>
 
-<c:forEach var="movie" items="${movies}" varStatus="i">
-			<div class="col-xs-2 col-m6-2 nowshowing">
-				<div class="poster">
-					<img class="imageSmall"
-						src="${pageContext.request.contextPath}/images/${movie.imageName}"
-						alt="Movie X Cinema" />
-				</div>
-				<p>${movie.movieTitle}</p>
-				<p>${sales}</p>
+	<c:forEach var="movie" items="${movies}" varStatus="i">
+		<div class="col-xs-2 col-m6-2 nowshowing">
+			<div class="poster">
+				<img class="imageSmall"
+					src="${pageContext.request.contextPath}/images/${movie.imageName}"
+					alt="Movie X Cinema" />
 			</div>
-		</c:forEach>
+			<p>${movie.movieTitle}</p>
+			<span class="price">PHP ${movie.sales}</span>
+		</div>
+	</c:forEach>
 </body>
 
 </html>
