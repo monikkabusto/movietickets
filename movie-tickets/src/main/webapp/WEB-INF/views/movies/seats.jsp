@@ -73,22 +73,34 @@ label {
 	<img class="imageSmall"
 		src="${pageContext.request.contextPath}/images/screen.jpg" />
 	<p></p>
-	<form:form method="POST" modelAttribute="transaction" action="printTicket">
+	<%--  	<form:form method="POST" modelAttribute="transaction" action="printTicket">
 		<form:checkboxes path="bookedSeats" items="${bookedSeats}" />
 		<br>
 		<input type="hidden" name="price" value="${price}"/>
 		<input type="hidden" name="showId" value="${showId}"/>
 		<input class="btn" type="submit" value="Book Tickets" /> 
+	</form:form>  --%>
+
+	<form:form method="POST" modelAttribute="transaction"
+		action="printTicket">
+		<c:forEach var="seat" items="${bookedSeats}" varStatus="i">
+			<form:checkbox name="${seat}" id="${seat}" label="${seat}"
+				path="bookedSeats" value="${seat}" />
+			<c:if test="${((i.index + 1) % 3) == 0}">
+				<p></p>
+			</c:if>
+		</c:forEach>
+		<input type="hidden" name="price" value="${price}" />
+		<input type="hidden" name="showId" value="${showId}" />
+		<input class="btn" type="submit" value="Book Tickets" />
 	</form:form>
 
-<%-- 	 	<c:forEach var="seat" items="${cinemaLayout}" varStatus="i">
-		${seat.seatView}
-		<input type="checkbox" name="${seat.seatView}" id="${seat.seatView}" />
-			<label for="${seat.seatView}"></label>
+	<%-- 
+ 	 	<c:forEach var="seat" items="${bookedSeats}" varStatus="i">
+		<form:checkbox name="${seat}" id="${seat}" label="${seat}" path="bookedSeats" value="seat"/>
 			<c:if test="${((i.index + 1) % 3) == 0}">
 				<p></p>
 			</c:if>
 		</c:forEach> --%>
-
 </body>
 </html>
